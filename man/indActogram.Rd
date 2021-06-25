@@ -4,7 +4,7 @@
 \alias{indActogram}
 \title{Plot actogram of individual fly}
 \usage{
-indActogram(data, bin = 30, t.cycle = 24, ind = 1, key = "k.ia")
+indActogram(data, bin = 30, t.cycle = 24, ind = 1, key.acto = 1)
 }
 \arguments{
 \item{data}{Input data file. The input for this function must be the output of the function binData(). See ??binData().}
@@ -14,6 +14,8 @@ indActogram(data, bin = 30, t.cycle = 24, ind = 1, key = "k.ia")
 \item{t.cycle}{Define the period of the environmental cycle or a single day in hours. This defaults to 24.}
 
 \item{ind}{The channel number (or individual) whose actogram must be plotted.}
+
+\item{key.acto}{Key for reactive input tables in the shiny app.}
 }
 \description{
 Allows users to generate individual actograms. The input for this function must be the output of the binData() function. The output of this function is a plotly object.

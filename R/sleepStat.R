@@ -8,6 +8,9 @@
 #' @param t.cycle Define the period of the environmental cycle or a single day in hours. This defaults to 24.
 #' @param photoperiod Duration (in hours) of what can be considered day-phase. This defaults to 12.
 #'
+#' @importFrom grDevices rgb
+#' @importFrom stats aggregate fitted lm na.omit sd
+#'
 #' @export sleepStat
 #'
 #' @examples
@@ -62,7 +65,7 @@ sleepStat <- function(input, sleep.def = c(5), t.cycle = 24, photoperiod = 12) {
         df.d <- as.data.frame((unclass(d.rle)))
         df.d$end <- cumsum(df.d$lengths)
         df.d$start <- df.d$end - df.d$lengths + 1
-        ddf.d <- subset(df.d, values == 1 & lengths >= sleep.def[1])
+        ddf.d <- subset(df.d, df.d$values == 1 & df.d$lengths >= sleep.def[1])
 
         day.cyc.boutnum[j,i] <- length(ddf.d[,1])
         day.cyc.boutdur[j,i] <- mean(ddf.d$lengths)
@@ -73,7 +76,7 @@ sleepStat <- function(input, sleep.def = c(5), t.cycle = 24, photoperiod = 12) {
         df.n <- as.data.frame((unclass(n.rle)))
         df.n$end <- cumsum(df.n$lengths)
         df.n$start <- df.n$end - df.n$lengths + 1
-        ddf.n <- subset(df.n, values == 1 & lengths >= sleep.def[1])
+        ddf.n <- subset(df.n, df.n$values == 1 & df.n$lengths >= sleep.def[1])
 
         night.cyc.boutnum[j,i] <- length(ddf.n[,1])
         night.cyc.boutdur[j,i] <- mean(ddf.n$lengths)
@@ -103,7 +106,7 @@ sleepStat <- function(input, sleep.def = c(5), t.cycle = 24, photoperiod = 12) {
         df.d <- as.data.frame((unclass(d.rle)))
         df.d$end <- cumsum(df.d$lengths)
         df.d$start <- df.d$end - df.d$lengths + 1
-        ddf.d <- subset(df.d, values == 1 & lengths >= sleep.def[1] & lengths < sleep.def[2])
+        ddf.d <- subset(df.d, df.d$values == 1 & df.d$lengths >= sleep.def[1] & df.d$lengths < sleep.def[2])
 
         day.cyc.boutnum[j,i] <- length(ddf.d[,1])
         day.cyc.boutdur[j,i] <- mean(ddf.d$lengths)
@@ -114,7 +117,7 @@ sleepStat <- function(input, sleep.def = c(5), t.cycle = 24, photoperiod = 12) {
         df.n <- as.data.frame((unclass(n.rle)))
         df.n$end <- cumsum(df.n$lengths)
         df.n$start <- df.n$end - df.n$lengths + 1
-        ddf.n <- subset(df.n, values == 1 & lengths >= sleep.def[1] & lengths < sleep.def[2])
+        ddf.n <- subset(df.n, df.n$values == 1 & df.n$lengths >= sleep.def[1] & df.n$lengths < sleep.def[2])
 
         night.cyc.boutnum[j,i] <- length(ddf.n[,1])
         night.cyc.boutdur[j,i] <- mean(ddf.n$lengths)

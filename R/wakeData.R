@@ -9,6 +9,9 @@
 #' @param bin Intervals in which data are saved (in minutes). This defaults to 30. The value of bin cannot be lower than that of sleep.def.
 #' @param t.cycle Define the period of the environmental cycle or a single day in hours. This defaults to 24.
 #'
+#' @importFrom grDevices rgb
+#' @importFrom stats aggregate fitted lm na.omit sd
+#'
 #' @export wakeData
 #'
 #' @examples
@@ -40,7 +43,7 @@ wakeData <- function(data, sleep.def = c(5), bin = 30, t.cycle = 24) {
         y <- rle(x)
         d_y <- as.data.frame(unclass(y))
         # dd_y_sleep <- subset(d_y, values == 1 & lengths >= sleep.def)
-        dd_y_wake <- subset(d_y, (values == 1 & lengths < sleep.def[1]) | (values == 0))
+        dd_y_wake <- subset(d_y, (d_y$values == 1 & d_y$lengths < sleep.def[1]) | (d_y$values == 0))
         # sleep[i,j] <- sum(dd_y_sleep$lengths)
         wake[i,j] <- sum(dd_y_wake$lengths)
       }
@@ -52,7 +55,7 @@ wakeData <- function(data, sleep.def = c(5), bin = 30, t.cycle = 24) {
         y <- rle(x)
         d_y <- as.data.frame(unclass(y))
         # dd_y_sleep <- subset(d_y, values == 1 & lengths >= sleep.def)
-        dd_y_wake <- subset(d_y, (values == 1 & lengths < sleep.def[1]) | (values == 0) | lengths > sleep.def[2])
+        dd_y_wake <- subset(d_y, (d_y$values == 1 & d_y$lengths < sleep.def[1]) | (d_y$values == 0) | d_y$lengths > sleep.def[2])
         # sleep[i,j] <- sum(dd_y_sleep$lengths)
         wake[i,j] <- sum(dd_y_wake$lengths)
       }

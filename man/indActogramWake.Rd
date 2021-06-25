@@ -10,7 +10,7 @@ indActogramWake(
   bin = 30,
   t.cycle = 24,
   ind = 1,
-  key = "k.iaw"
+  key.wake = 1
 )
 }
 \arguments{
@@ -23,6 +23,8 @@ indActogramWake(
 \item{t.cycle}{Define the period of the environmental cycle or a single day in hours. This defaults to 24.}
 
 \item{ind}{The channel number (or individual) whose actogram must be plotted.}
+
+\item{key.wake}{Key for reactive input tables in the shiny app.}
 }
 \description{
 This function allows users to generate individual actograms for "wake" data. Input for this function must be an output from the trimData() function. The output of this function is a plotly object.

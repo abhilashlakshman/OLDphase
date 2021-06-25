@@ -11,7 +11,9 @@
 #' @param eve.win.end Define the end of evening window.
 #' @param rm.channels A vector of channels from a DAM monitor that must be discarded from analysis. If channels 1 to 5 must be removed, type in c(1:5). If channels 1 to 5 and 10 to 13 and 15 and 17 must be removed, type in c(1:5,10:13,15,17). Default is to include all individuals.
 #'
-#' @importFrom plotly plot_ly add_trace layout %>% subplot
+#' @importFrom plotly plot_ly add_trace layout %>% subplot add_lines
+#' @importFrom grDevices rgb
+#' @importFrom stats aggregate fitted lm na.omit sd
 #'
 #' @export anticipationAct
 #'
@@ -26,232 +28,235 @@
 
 anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start, eve.win.start, eve.win.end, rm.channels = c()) {
 
-  library(plotly)
-
-  if ("Slope" %in% method) {
-    bd <- binData(data = data, input.bin = 1, output.bin = 15, t.cycle = t.cycle)
-  } else if ("Stoleru" %in% method) {
-    bd <- binData(data = data, input.bin = 1, output.bin = 60, t.cycle = t.cycle)
-  } else if("Harrisingh" %in% method) {
-    bd <- binData(data = data, input.bin = 1, output.bin = 60, t.cycle = t.cycle)
-  }
-
-  if (is.null(rm.channels)) {
-    df <- bd
-  } else {
-    df <- bd[,-c(1+rm.channels)]
-  }
-  pre.averaged.vals <- aggregate(df, by = list(df[,"ZT"]), FUN = mean)
-  averaged.vals <- pre.averaged.vals[,-c(1)]
-
-  if ("Slope" %in% method) {
-
-    df.ant.morn <- subset(averaged.vals, ZT > morn.win.start - (15/60))
-    df.ant.eve <- subset(averaged.vals, ZT > eve.win.start - (15/60) & ZT < eve.win.end + (15/60))
-
-    f1 <- list(
-      family = "Arial, sans-serif",
-      size = 20,
-      color = "black"
-    )
-    f2 <- list(
-      family = "Arial, sans-serif",
-      size = 14,
-      color = "black"
-    )
-
-    p.morn <- plot_ly(
-      x = df.ant.morn[,1],
-      y = rowMeans(df.ant.morn[,-1]),
-      type = "scatter",
-      mode = "lines",
-      line = list(
-        color = "red",
-        width = 2
-      ),
-      name = "Mean Activity"
-    )%>%
-      layout(
-        showlegend = F,
-        xaxis = list(
-          showgrid = F,
-          showline = T,
-          titlefont = f1,
-          tickfont = f2,
-          title = "ZT (h)",
-          linecolor = "black",
-          # linewidth = 4,
-          mirror = TRUE,
-          autotick = TRUE,
-          ticks = "inside",
-          tickcolor = toRGB("black"),
-          # tickwidth = 4,
-          range = c(df.ant.morn[1,1]-0.5, df.ant.morn[length(df.ant.morn[,1]),1]+0.5)
-        ),
-        yaxis = list(
-          showgrid = F,
-          showline = T,
-          titlefont = f1,
-          tickfont = f2,
-          title = "Activity",
-          linecolor = "black",
-          # linewidth = 4,
-          mirror = TRUE,
-          autotick = TRUE,
-          ticks = "inside",
-          tickcolor = toRGB("black"),
-          range = c(0, max(c(rowMeans(df.ant.morn[,-1])))+5)
-          # tickwidth = 4,
-        )
+  requireNamespace("plotly")
+  # library(plotly)
+  
+  if (requireNamespace("plotly", quietly = T)) {
+    if ("Slope" %in% method) {
+      bd <- binData(data = data, input.bin = 1, output.bin = 15, t.cycle = t.cycle)
+    } else if ("Stoleru" %in% method) {
+      bd <- binData(data = data, input.bin = 1, output.bin = 60, t.cycle = t.cycle)
+    } else if("Harrisingh" %in% method) {
+      bd <- binData(data = data, input.bin = 1, output.bin = 60, t.cycle = t.cycle)
+    }
+    
+    if (is.null(rm.channels)) {
+      df <- bd
+    } else {
+      df <- bd[,-c(1+rm.channels)]
+    }
+    pre.averaged.vals <- aggregate(df, by = list(df[,"ZT"]), FUN = mean)
+    averaged.vals <- pre.averaged.vals[,-c(1)]
+    
+    if ("Slope" %in% method) {
+      
+      df.ant.morn <- subset(averaged.vals, averaged.vals$ZT > morn.win.start - (15/60))
+      df.ant.eve <- subset(averaged.vals, averaged.vals$ZT > eve.win.start - (15/60) & averaged.vals$ZT < eve.win.end + (15/60))
+      
+      f1 <- list(
+        family = "Arial, sans-serif",
+        size = 20,
+        color = "black"
       )
-
-    p.eve <- plot_ly(
-      x = df.ant.eve[,1],
-      y = rowMeans(df.ant.eve[,-1]),
-      type = "scatter",
-      mode = "lines",
-      line = list(
-        color = "red",
-        width = 2
-      ),
-      name = "Mean Activity"
-    )%>%
-      layout(
-        showlegend = F,
-        xaxis = list(
-          showgrid = F,
-          showline = T,
-          titlefont = f1,
-          tickfont = f2,
-          title = "ZT (h)",
-          linecolor = "black",
-          # linewidth = 4,
-          mirror = TRUE,
-          autotick = TRUE,
-          ticks = "inside",
-          tickcolor = toRGB("black"),
-          # tickwidth = 4,
-          range = c(df.ant.eve[1,1]-0.5, df.ant.eve[length(df.ant.eve[,1]),1]+0.5)
-        ),
-        yaxis = list(
-          showgrid = F,
-          showline = T,
-          titlefont = f1,
-          tickfont = f2,
-          title = "Activity",
-          linecolor = "black",
-          # linewidth = 4,
-          mirror = TRUE,
-          autotick = TRUE,
-          ticks = "inside",
-          tickcolor = toRGB("black"),
-          range = c(0, max(c(rowMeans(df.ant.eve[,-1])))+5)
-          # tickwidth = 4,
-        )
+      f2 <- list(
+        family = "Arial, sans-serif",
+        size = 14,
+        color = "black"
       )
-
-    anticipation <- matrix(NA, nrow = (length(averaged.vals[1,])-1), ncol = 3)
-    colnames(anticipation) <- c("Channel", "Morning", "Evening")
-    for.row.nam <- averaged.vals[,-1]
-    nam <- colnames(for.row.nam)
-    row.nam <- as.numeric(unlist(strsplit(nam, "I")))
-    row.nam = row.nam[!is.na(row.nam)]
-
-    for (i in 1:length(anticipation[,1])) {
-      anticipation[i,"Channel"] = row.nam[i]
-    }
-
-    for (i in 2:length(averaged.vals[1,])) {
-      morn.lin.mod <- lm(df.ant.morn[,i]~df.ant.morn[,"ZT"])
-      eve.lin.mod <- lm(df.ant.eve[,i]~df.ant.eve[,"ZT"])
-
-      p.morn <- p.morn%>%
-        add_lines(
-          x = df.ant.morn[,1],
-          y = fitted(morn.lin.mod),
-          line = list(
-            color = rgb(0,0,0,0.5),
-            width = 1
+      
+      p.morn <- plot_ly(
+        x = df.ant.morn[,1],
+        y = rowMeans(df.ant.morn[,-1]),
+        type = "scatter",
+        mode = "lines",
+        line = list(
+          color = "red",
+          width = 2
+        ),
+        name = "Mean Activity"
+      )%>%
+        layout(
+          showlegend = F,
+          xaxis = list(
+            showgrid = F,
+            showline = T,
+            titlefont = f1,
+            tickfont = f2,
+            title = "ZT (h)",
+            linecolor = "black",
+            # linewidth = 4,
+            mirror = TRUE,
+            autotick = TRUE,
+            ticks = "inside",
+            tickcolor = "black",
+            # tickwidth = 4,
+            range = c(df.ant.morn[1,1]-0.5, df.ant.morn[length(df.ant.morn[,1]),1]+0.5)
           ),
-          name = colnames(df.ant.morn)[i]
+          yaxis = list(
+            showgrid = F,
+            showline = T,
+            titlefont = f1,
+            tickfont = f2,
+            title = "Activity",
+            linecolor = "black",
+            # linewidth = 4,
+            mirror = TRUE,
+            autotick = TRUE,
+            ticks = "inside",
+            tickcolor = "black",
+            range = c(0, max(c(rowMeans(df.ant.morn[,-1])))+5)
+            # tickwidth = 4,
+          )
         )
-
-      p.eve <- p.eve%>%
-        add_lines(
-          x = df.ant.eve[,1],
-          y = fitted(eve.lin.mod),
-          line = list(
-            color = rgb(0,0,0,0.5),
-            width = 1
+      
+      p.eve <- plot_ly(
+        x = df.ant.eve[,1],
+        y = rowMeans(df.ant.eve[,-1]),
+        type = "scatter",
+        mode = "lines",
+        line = list(
+          color = "red",
+          width = 2
+        ),
+        name = "Mean Activity"
+      )%>%
+        layout(
+          showlegend = F,
+          xaxis = list(
+            showgrid = F,
+            showline = T,
+            titlefont = f1,
+            tickfont = f2,
+            title = "ZT (h)",
+            linecolor = "black",
+            # linewidth = 4,
+            mirror = TRUE,
+            autotick = TRUE,
+            ticks = "inside",
+            tickcolor = "black",
+            # tickwidth = 4,
+            range = c(df.ant.eve[1,1]-0.5, df.ant.eve[length(df.ant.eve[,1]),1]+0.5)
           ),
-          name = colnames(df.ant.eve)[i]
+          yaxis = list(
+            showgrid = F,
+            showline = T,
+            titlefont = f1,
+            tickfont = f2,
+            title = "Activity",
+            linecolor = "black",
+            # linewidth = 4,
+            mirror = TRUE,
+            autotick = TRUE,
+            ticks = "inside",
+            tickcolor = "black",
+            range = c(0, max(c(rowMeans(df.ant.eve[,-1])))+5)
+            # tickwidth = 4,
+          )
         )
-
-      anticipation[i-1,"Morning"] <- as.numeric(morn.lin.mod$coefficients[2])
-      anticipation[i-1,"Evening"] <- as.numeric(eve.lin.mod$coefficients[2])
+      
+      anticipation <- matrix(NA, nrow = (length(averaged.vals[1,])-1), ncol = 3)
+      colnames(anticipation) <- c("Channel", "Morning", "Evening")
+      for.row.nam <- averaged.vals[,-1]
+      nam <- colnames(for.row.nam)
+      row.nam <- as.numeric(unlist(strsplit(nam, "I")))
+      row.nam = row.nam[!is.na(row.nam)]
+      
+      for (i in 1:length(anticipation[,1])) {
+        anticipation[i,"Channel"] = row.nam[i]
+      }
+      
+      for (i in 2:length(averaged.vals[1,])) {
+        morn.lin.mod <- lm(df.ant.morn[,i]~df.ant.morn[,"ZT"])
+        eve.lin.mod <- lm(df.ant.eve[,i]~df.ant.eve[,"ZT"])
+        
+        p.morn <- p.morn%>%
+          add_lines(
+            x = df.ant.morn[,1],
+            y = fitted(morn.lin.mod),
+            line = list(
+              color = rgb(0,0,0,0.5),
+              width = 1
+            ),
+            name = colnames(df.ant.morn)[i]
+          )
+        
+        p.eve <- p.eve%>%
+          add_lines(
+            x = df.ant.eve[,1],
+            y = fitted(eve.lin.mod),
+            line = list(
+              color = rgb(0,0,0,0.5),
+              width = 1
+            ),
+            name = colnames(df.ant.eve)[i]
+          )
+        
+        anticipation[i-1,"Morning"] <- as.numeric(morn.lin.mod$coefficients[2])
+        anticipation[i-1,"Evening"] <- as.numeric(eve.lin.mod$coefficients[2])
+      }
+      
+      
+      output <- list(
+        "Plot.morn" = p.morn,
+        "Plot.eve" = p.eve,
+        "Data" = anticipation
+      )
+      
+      return(output)
+      
+    } else if ("Stoleru" %in% method) {
+      df.ant.morn <- rbind(
+        subset(averaged.vals, averaged.vals$ZT > t.cycle - 3),
+        averaged.vals[1,]
+      )
+      df.ant.eve <- subset(averaged.vals, averaged.vals$ZT > eve.win.end - 3 & averaged.vals$ZT < eve.win.end + 2)
+      
+      anticipation <- matrix(NA, nrow = (length(averaged.vals[1,])-1), ncol = 3)
+      colnames(anticipation) <- c("Channel", "Morning", "Evening")
+      for.row.nam <- averaged.vals[,-1]
+      nam <- colnames(for.row.nam)
+      row.nam <- as.numeric(unlist(strsplit(nam, "I")))
+      row.nam = row.nam[!is.na(row.nam)]
+      
+      for (i in 1:length(anticipation[,1])) {
+        anticipation[i,"Channel"] = row.nam[i]
+      }
+      
+      for (i in 2:length(averaged.vals[1,])) {
+        morn.ant <- (df.ant.morn[3,i] * ((df.ant.morn[3,i] - df.ant.morn[2,i]) * (df.ant.morn[2,i] - df.ant.morn[1,i])))/df.ant.morn[4,i]
+        anticipation[i-1,"Morning"] <- as.numeric(morn.ant)
+        
+        eve.ant <- (df.ant.eve[3,i] * ((df.ant.eve[3,i] - df.ant.eve[2,i]) * (df.ant.eve[2,i] - df.ant.eve[1,i])))/df.ant.eve[4,i]
+        anticipation[i-1,"Evening"] <- as.numeric(eve.ant)
+      }
+      
+      return(anticipation)
+      
+    } else if ("Harrisingh" %in% method) {
+      df.ant.morn <- subset(averaged.vals, averaged.vals$ZT > t.cycle - 6)
+      df.ant.eve <- subset(averaged.vals, averaged.vals$ZT > eve.win.end - 6 & averaged.vals$ZT < eve.win.end + 1)
+      
+      anticipation <- matrix(NA, nrow = (length(averaged.vals[1,])-1), ncol = 3)
+      colnames(anticipation) <- c("Channel", "Morning", "Evening")
+      for.row.nam <- averaged.vals[,-1]
+      nam <- colnames(for.row.nam)
+      row.nam <- as.numeric(unlist(strsplit(nam, "I")))
+      row.nam = row.nam[!is.na(row.nam)]
+      
+      for (i in 1:length(anticipation[,1])) {
+        anticipation[i,"Channel"] = row.nam[i]
+      }
+      
+      for (i in 2:length(averaged.vals[1,])) {
+        morn.ant <- sum(df.ant.morn[4:6,i])/sum(df.ant.morn[,i])
+        anticipation[i-1,"Morning"] <- as.numeric(morn.ant)
+        
+        eve.ant <- sum(df.ant.eve[4:6,i])/sum(df.ant.eve[,i])
+        anticipation[i-1,"Evening"] <- as.numeric(eve.ant)
+      }
+      
+      return(anticipation)
     }
-
-
-    output <- list(
-      "Plot.morn" = p.morn,
-      "Plot.eve" = p.eve,
-      "Data" = anticipation
-    )
-
-    return(output)
-
-  } else if ("Stoleru" %in% method) {
-    df.ant.morn <- rbind(
-      subset(averaged.vals, ZT > t.cycle - 3),
-      averaged.vals[1,]
-    )
-    df.ant.eve <- subset(averaged.vals, ZT > eve.win.end - 3 & ZT < eve.win.end + 2)
-
-    anticipation <- matrix(NA, nrow = (length(averaged.vals[1,])-1), ncol = 3)
-    colnames(anticipation) <- c("Channel", "Morning", "Evening")
-    for.row.nam <- averaged.vals[,-1]
-    nam <- colnames(for.row.nam)
-    row.nam <- as.numeric(unlist(strsplit(nam, "I")))
-    row.nam = row.nam[!is.na(row.nam)]
-
-    for (i in 1:length(anticipation[,1])) {
-      anticipation[i,"Channel"] = row.nam[i]
-    }
-
-    for (i in 2:length(averaged.vals[1,])) {
-      morn.ant <- (df.ant.morn[3,i] * ((df.ant.morn[3,i] - df.ant.morn[2,i]) * (df.ant.morn[2,i] - df.ant.morn[1,i])))/df.ant.morn[4,i]
-      anticipation[i-1,"Morning"] <- as.numeric(morn.ant)
-
-      eve.ant <- (df.ant.eve[3,i] * ((df.ant.eve[3,i] - df.ant.eve[2,i]) * (df.ant.eve[2,i] - df.ant.eve[1,i])))/df.ant.eve[4,i]
-      anticipation[i-1,"Evening"] <- as.numeric(eve.ant)
-    }
-
-    return(anticipation)
-
-  } else if ("Harrisingh" %in% method) {
-    df.ant.morn <- subset(averaged.vals, ZT > t.cycle - 6)
-    df.ant.eve <- subset(averaged.vals, ZT > eve.win.end - 6 & ZT < eve.win.end + 1)
-
-    anticipation <- matrix(NA, nrow = (length(averaged.vals[1,])-1), ncol = 3)
-    colnames(anticipation) <- c("Channel", "Morning", "Evening")
-    for.row.nam <- averaged.vals[,-1]
-    nam <- colnames(for.row.nam)
-    row.nam <- as.numeric(unlist(strsplit(nam, "I")))
-    row.nam = row.nam[!is.na(row.nam)]
-
-    for (i in 1:length(anticipation[,1])) {
-      anticipation[i,"Channel"] = row.nam[i]
-    }
-
-    for (i in 2:length(averaged.vals[1,])) {
-      morn.ant <- sum(df.ant.morn[4:6,i])/sum(df.ant.morn[,i])
-      anticipation[i-1,"Morning"] <- as.numeric(morn.ant)
-
-      eve.ant <- sum(df.ant.eve[4:6,i])/sum(df.ant.eve[,i])
-      anticipation[i-1,"Evening"] <- as.numeric(eve.ant)
-    }
-
-    return(anticipation)
   }
 
 }

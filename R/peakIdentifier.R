@@ -12,8 +12,10 @@
 #' @param rm.channels All the channels that users want to remove from their averaging. This must be a vector, i.e., channels must be separated by commas. For instance, if users choose to remove channels 1 to 5, 25 and 32, then the input should be either c(1,2,3,4,5,25,32) or c(1:5,25,32). This defaults to an empty vector, meaning no individuals are removed from analysis.
 #'
 #' @importFrom plotly plot_ly add_trace subplot %>% layout
-#' @importFrom pracma findpeaks
+#' @importFrom pracma findpeaks isempty
 #' @importFrom signal sgolayfilt
+#' @importFrom grDevices rgb
+#' @importFrom stats aggregate fitted lm na.omit sd
 #'
 #' @export peakIdentifier
 #'
@@ -23,103 +25,114 @@
 #' pks <- peakIdentifier(data = td)
 
 peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist = 100, peak.ht.scal = 0.5, windows = list(c(18,6), c(18,6)), rm.channels = c()) {
-  library(plotly)
-  library(pracma)
-  library(signal)
-
-  bd <- binData(data = data, input.bin = 1, output.bin = 5, t.cycle = 24)
-
-  pro <- profilesAct(data = bd, bin = 5, t.cycle = 24, average.type = "Days", rm.channels = rm.channels)
-
-  pre.dat <- pro$Profiles
-  dat <- rbind(subset(pre.dat, ZT > 18), subset(pre.dat, ZT < 18.01))
-
-  p <- list()
-
-  for (i in 1:32) {
-    ind = i
-    xx = signal::sgolayfilt(x = na.omit(dat[,1+ind]), p = filt.order, n = filt.length)
-    pks <- pracma::findpeaks(xx, minpeakdistance = min.peak.dist, minpeakheight = max(xx)*peak.ht.scal)
-
-
-    p[[i]] <- plot_ly(
-    )%>%
-      add_trace(
-        x = 1:length(dat[,1]),
-        y = dat[,1+ind],
-        type = "scatter",
-        mode = "lines",
-        line = list(
-          color = "black",
-          dash = "dash",
-          width = 1
-        )
+  
+  requireNamespace("plotly")
+  requireNamespace("pracma")
+  requireNamespace("signal")
+  
+  if (requireNamespace("plotly", quietly = T)) {
+    # library(plotly)
+    # library(pracma)
+    # library(signal)
+    
+    bd <- binData(data = data, input.bin = 1, output.bin = 5, t.cycle = 24)
+    
+    pro <- profilesAct(data = bd, bin = 5, t.cycle = 24, average.type = "Days", rm.channels = rm.channels)
+    
+    pre.dat <- pro$Profiles
+    dat <- rbind(subset(pre.dat, pre.dat$ZT > 18), subset(pre.dat, pre.dat$ZT < 18.01))
+    
+    p <- list()
+    
+    for (i in 1:32) {
+      ind = i
+      if (requireNamespace("signal", quietly = T)) {
+        xx = signal::sgolayfilt(x = na.omit(dat[,1+ind]), p = filt.order, n = filt.length)
+      }
+      pks <- pracma::findpeaks(xx, minpeakdistance = min.peak.dist, minpeakheight = max(xx)*peak.ht.scal)
+      
+      
+      p[[i]] <- plot_ly(
       )%>%
-      add_trace(
-        x = 1:length(xx),
-        y = xx,
-        type = "scatter",
-        mode = "lines",
-        line = list(
-          color = "red",
-          dash = "solid",
-          width = 2
+        add_trace(
+          x = 1:length(dat[,1]),
+          y = dat[,1+ind],
+          type = "scatter",
+          mode = "lines",
+          line = list(
+            color = "black",
+            dash = "dash",
+            width = 1
+          )
+        )%>%
+        add_trace(
+          x = 1:length(xx),
+          y = xx,
+          type = "scatter",
+          mode = "lines",
+          line = list(
+            color = "red",
+            dash = "solid",
+            width = 2
+          )
+        )%>%
+        add_trace(
+          x = pks[,2],
+          y = pks[,1]+3,
+          type = "scatter",
+          mode = "markers",
+          marker = list(
+            color = "blue",
+            symbol = "triangle-down",
+            size = 20
+          )
         )
-      )%>%
-      add_trace(
-        x = pks[,2],
-        y = pks[,1]+3,
-        type = "scatter",
-        mode = "markers",
-        marker = list(
-          color = "blue",
-          symbol = "triangle-down",
-          size = 20
-        )
+    }
+    
+    sp <- subplot(p, nrows = 4, shareX = T, shareY = T, margin = 0.01)%>%
+      layout(
+        showlegend = F
       )
-  }
-
-  sp <- subplot(p, nrows = 4, shareX = T, shareY = T, margin = 0.01)%>%
-    layout(
-      showlegend = F
+    
+    
+    phase <- matrix(NA, nrow = 32, ncol = 3)
+    colnames(phase) <- c("Channel", "Morning Peak", "Evening Peak")
+    
+    phase[1:32,"Channel"] <- 1:32
+    
+    for (i in 1:32) {
+      ind = i
+      if (requireNamespace("signal", quietly = T)) {
+        xx = signal::sgolayfilt(x = na.omit(dat[,1+ind]), p = filt.order, n = filt.length)
+      }
+      pks <- pracma::findpeaks(xx, minpeakdistance = min.peak.dist, minpeakheight = max(xx)*peak.ht.scal)
+      
+      pks.zt <- dat[pks[,2],1]
+      morn.peak.times <- windows[[1]]
+      eve.peak.times <- windows[[2]]
+      
+      pks.morn <- pks.zt[pks.zt < morn.peak.times[2] | pks.zt > morn.peak.times[1]]
+      pks.eve <- pks.zt[pks.zt < eve.peak.times[1] & pks.zt > eve.peak.times[2]]
+      
+      if (pracma::isempty(pks.eve)) {
+        phase[i, "Evening Peak"] = NA
+      } else {
+        phase[i, "Evening Peak"] = pks.eve
+      }
+      
+      if (pracma::isempty(pks.morn)) {
+        phase[i, "Morning Peak"] = NA
+      } else {
+        phase[i, "Morning Peak"] = pks.morn
+      }
+    }
+    
+    output <- list(
+      "Plots" = sp,
+      "Data" = phase
     )
-
-
-  phase <- matrix(NA, nrow = 32, ncol = 3)
-  colnames(phase) <- c("Channel", "Morning Peak", "Evening Peak")
-
-  phase[1:32,"Channel"] <- 1:32
-
-  for (i in 1:32) {
-    ind = i
-    xx = signal::sgolayfilt(x = na.omit(dat[,1+ind]), p = filt.order, n = filt.length)
-    pks <- pracma::findpeaks(xx, minpeakdistance = min.peak.dist, minpeakheight = max(xx)*peak.ht.scal)
-
-    pks.zt <- dat[pks[,2],1]
-    morn.peak.times <- windows[[1]]
-    eve.peak.times <- windows[[2]]
-
-    pks.morn <- pks.zt[pks.zt < morn.peak.times[2] | pks.zt > morn.peak.times[1]]
-    pks.eve <- pks.zt[pks.zt < eve.peak.times[1] & pks.zt > eve.peak.times[2]]
-
-    if (isempty(pks.eve)) {
-      phase[i, "Evening Peak"] = NA
-    } else {
-      phase[i, "Evening Peak"] = pks.eve
-    }
-
-    if (isempty(pks.morn)) {
-      phase[i, "Morning Peak"] = NA
-    } else {
-      phase[i, "Morning Peak"] = pks.morn
-    }
+    
+    return(output)
   }
-
-  output <- list(
-    "Plots" = sp,
-    "Data" = phase
-  )
-
-  return(output)
 
 }

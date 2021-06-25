@@ -17,6 +17,6 @@ NeedsCompilation: no
 Packaged: 2021-02-13 16:47:45 UTC; abhilashlakshman
 Author: Abhilash [aut, cre] (<https://orcid.org/0000-0002-9933-8989>)
 Maintainer: Abhilash <labhilash@gc.cuny.edu>
-Imports: circular, lubridate, plotly, pracma, signal, zeitgebr, zoo, signal, behavr
+Imports: circular, lubridate, plotly, pracma, signal, zeitgebr, zoo, behavr
 Depends: 
     R (>= 2.10)

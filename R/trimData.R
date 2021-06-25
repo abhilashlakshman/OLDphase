@@ -11,6 +11,8 @@
 #' @param t.cycle Define the period of the environmental cycle or a single day in hours. This defaults to 24.
 #'
 #' @importFrom lubridate hour minute
+#' @importFrom grDevices rgb
+#' @importFrom stats aggregate fitted lm na.omit sd
 #'
 #' @export trimData
 #'
@@ -19,8 +21,10 @@
 #' n.days = 10, bin = 1, t.cycle = 24)
 
 trimData <- function(data, start.date, start.time, n.days, bin = 1, t.cycle = 24) {
+  
+  requireNamespace("lubridate")
 
-  library(lubridate)
+  # library(lubridate)
 
   startdate <- as.Date(start.date, format = '%d %b %y')
   colnames(data) <- c("x","date","time",seq(1, (length(data[1,])-3), by = 1))

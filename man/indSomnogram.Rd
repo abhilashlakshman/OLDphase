@@ -10,7 +10,7 @@ indSomnogram(
   bin = 30,
   t.cycle = 24,
   ind = 1,
-  key = "k.is"
+  key.somno = 1
 )
 }
 \arguments{
@@ -23,6 +23,8 @@ indSomnogram(
 \item{t.cycle}{Define the period of the environmental cycle or a single day in hours. This defaults to 24.}
 
 \item{ind}{The channel number (or individual) whose periodogram must be plotted.}
+
+\item{key.somno}{Key for reactive input tables in the shiny app.}
 }
 \description{
 This function generates a somnogram for a single fly. Input for this function must be an output from the trimData() function. The output of this function is a plotly object.

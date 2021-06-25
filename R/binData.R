@@ -8,6 +8,9 @@
 #' @param output.bin Define the desired output bin size (in minutes). This defaults to 30.
 #' @param t.cycle Define the period of the environmental cycle or a single day in hours. This defaults to 24.
 #'
+#' @importFrom grDevices rgb
+#' @importFrom stats aggregate fitted lm na.omit sd
+#'
 #' @export binData
 #'
 #' @examples
