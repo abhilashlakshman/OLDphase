@@ -3,7 +3,7 @@ Title: Analyse Biological Time-Series Data
 Version: 1.1.1
 Authors@R: 
     person(given = "Abhilash",
-           family = "",
+           family = "Lakshman",
            role = c("aut", "cre"),
            email = "labhilash@gc.cuny.edu",
            comment = c(ORCID = "https://orcid.org/0000-0002-9933-8989"))
@@ -15,8 +15,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 NeedsCompilation: no
 Packaged: 2021-02-13 16:47:45 UTC; abhilashlakshman
-Author: Abhilash [aut, cre] (<https://orcid.org/0000-0002-9933-8989>)
-Maintainer: Abhilash <labhilash@gc.cuny.edu>
+Author: Abhilash Lakshman [aut, cre] (<https://orcid.org/0000-0002-9933-8989>)
+Maintainer: Abhilash Lakshman <labhilash@gc.cuny.edu>
 Imports: circular, lubridate, plotly, pracma, signal, zeitgebr, zoo, behavr
 Depends: 
     R (>= 2.10)

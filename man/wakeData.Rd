@@ -21,7 +21,7 @@ In a particular bin, sleep is calculated as the total minutes of inactivity equa
 }
 \examples{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
-n.days = 10, bin = 1, t.cycle = 24)
+n.days = 4, bin = 1, t.cycle = 24)
 wd <- wakeData(data = td)
 wd <- wakeData(data = td, sleep.def = 20, bin = 60, t.cycle = 24)
 }
