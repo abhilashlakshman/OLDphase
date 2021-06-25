@@ -58,7 +58,7 @@ anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start
       color = "black"
     )
 
-    p.morn <- plotly::plot_ly(
+    p.morn <- plot_ly(
       x = df.ant.morn[,1],
       y = rowMeans(df.ant.morn[,-1]),
       type = "scatter",
@@ -103,7 +103,7 @@ anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start
         )
       )
 
-    p.eve <- plotly::plot_ly(
+    p.eve <- plot_ly(
       x = df.ant.eve[,1],
       y = rowMeans(df.ant.eve[,-1]),
       type = "scatter",

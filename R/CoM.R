@@ -119,7 +119,7 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
 
     new.out <- cbind(chan.num.col, output)
 
-    p <- plotly::plot_ly(
+    p <- plot_ly(
       type = "scatterpolar",
       mode = "lines+markers"
     )
@@ -326,7 +326,7 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
 
     new.out <- cbind(chan.num.col, output)
 
-    p <- plotly::plot_ly(
+    p <- plot_ly(
       type = "scatterpolar",
       mode = "lines+markers"
     )
@@ -533,7 +533,7 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
 
     new.out <- cbind(chan.num.col, output)
 
-    p <- plotly::plot_ly(
+    p <- plot_ly(
       type = "scatterpolar",
       mode = "lines+markers"
     )

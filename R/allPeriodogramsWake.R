@@ -193,7 +193,7 @@ allPeriodogramsWake <- function(data, bin = 30, method = "ChiSquare", low.per = 
 
     a <- as.matrix(ind_data[[i]])
 
-    ind_plot[[i]] <- plotly::plot_ly(x = a[,"period"]/3600,
+    ind_plot[[i]] <- plot_ly(x = a[,"period"]/3600,
                              y = a[,"adj.power"],
                              name = i,
                              type = "scatter",
@@ -215,7 +215,7 @@ allPeriodogramsWake <- function(data, bin = 30, method = "ChiSquare", low.per = 
       )
   }
 
-  plot.periodograms <- plotly::subplot(ind_plot, nrows = 4, shareX = TRUE, shareY = TRUE)%>%
+  plot.periodograms <- subplot(ind_plot, nrows = 4, shareX = TRUE, shareY = TRUE)%>%
     layout(
       showlegend=FALSE
     )

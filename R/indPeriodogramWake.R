@@ -114,7 +114,7 @@ indPeriodogramWake <- function(data, bin = 30, method = "ChiSquare", low.per = 1
     # dtick = max(ind_data$power)/6
   )
 
-  ind.plot <- plotly::plot_ly(x = ind_data[,"period"]/3600,
+  ind.plot <- plot_ly(x = ind_data[,"period"]/3600,
                       y = ind_data[,"adj.power"],
                       name = paste("Channel: ", ind, sep = ""),
                       type = "scatter",

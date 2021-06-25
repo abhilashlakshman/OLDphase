@@ -67,7 +67,7 @@ allActogramsWake <- function(data, sleep.def = 5, bin = 30, t.cycle = 24) {
                                width = s_per_day*n.plot,
                                by = s_per_day, as.numeric)))
     for (j in 1:length(a[1,])){
-      p[[j]] <- plotly::plot_ly(
+      p[[j]] <- plot_ly(
         # x = seq(0, ((length(a[,j])*(bin/60))-(bin/60)), by = bin/60),
         y = a[,j]/max(a[,j]),
         type = "bar",
@@ -108,7 +108,7 @@ allActogramsWake <- function(data, sleep.def = 5, bin = 30, t.cycle = 24) {
           )
         )
     }
-    plots[[i]] <- plotly::subplot(
+    plots[[i]] <- subplot(
       p,
       nrows = length(a[1,]),
       shareX = T,
@@ -185,7 +185,7 @@ allActogramsWake <- function(data, sleep.def = 5, bin = 30, t.cycle = 24) {
       annotations = ann4
     )
 
-  final <- plotly::subplot(
+  final <- subplot(
     plots,
     nrows = 4
   )%>%

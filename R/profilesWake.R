@@ -38,7 +38,7 @@ profilesWake <- function(data, bin = 30, t.cycle = 24, average.type = "Both", rm
 
     t = table(data[,"ZT"])
     n.cyc <- as.numeric(t[[1]])
-    p <- plotly::plot_ly(
+    p <- plot_ly(
       x = seq(1, length(output[,1])),
       y = output[,"Mean"],
       type = "scatter",
@@ -143,7 +143,7 @@ profilesWake <- function(data, bin = 30, t.cycle = 24, average.type = "Both", rm
 
     p <- list()
     for (i in 2:length(averaged.vals[1,])) {
-      p[[i-1]] <- plotly::plot_ly(
+      p[[i-1]] <- plot_ly(
         x = seq(1, length(output[,1])),
         y = output[,i],
         type = "scatter",
@@ -219,7 +219,7 @@ profilesWake <- function(data, bin = 30, t.cycle = 24, average.type = "Both", rm
           )
         )
     }
-    pp <- plotly::subplot(p, nrows = 4, shareX = T, shareY = T, margin = 0.01)
+    pp <- subplot(p, nrows = 4, shareX = T, shareY = T, margin = 0.01)
     out <- list(
       "Profiles" = output,
       "Plot" = pp
@@ -242,7 +242,7 @@ profilesWake <- function(data, bin = 30, t.cycle = 24, average.type = "Both", rm
     output <- cbind(data[1:s_per_day,"ZT"], mean.profile, sem)
     colnames(output) <- c("ZT", "Mean", "SEM")
 
-    p <- plotly::plot_ly(
+    p <- plot_ly(
       x = seq(1, length(output[,1])),
       y = output[,"Mean"],
       type = "scatter",

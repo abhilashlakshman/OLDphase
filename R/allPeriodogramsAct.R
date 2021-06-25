@@ -222,7 +222,7 @@ allPeriodogramsAct <- function(data, bin = 1, method = "ChiSquare", low.per = 16
 
     a <- as.matrix(ind_data[[i]])
 
-    ind_plot[[i]] <- plotly::plot_ly(x = a[,"period"]/3600,
+    ind_plot[[i]] <- plot_ly(x = a[,"period"]/3600,
                              y = a[,"adj.power"],
                              name = i,
                              type = "scatter",
@@ -244,7 +244,7 @@ allPeriodogramsAct <- function(data, bin = 1, method = "ChiSquare", low.per = 16
       )
   }
 
-  plot.periodograms <- plotly::subplot(ind_plot, nrows = 4, shareX = TRUE, shareY = TRUE)%>%
+  plot.periodograms <- subplot(ind_plot, nrows = 4, shareX = TRUE, shareY = TRUE)%>%
     layout(
            showlegend=FALSE
     )

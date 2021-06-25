@@ -39,7 +39,7 @@ peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist
     pks <- pracma::findpeaks(xx, minpeakdistance = min.peak.dist, minpeakheight = max(xx)*peak.ht.scal)
 
 
-    p[[i]] <- plotly::plot_ly(
+    p[[i]] <- plot_ly(
     )%>%
       add_trace(
         x = 1:length(dat[,1]),
@@ -76,7 +76,7 @@ peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist
       )
   }
 
-  sp <- plotly::subplot(p, nrows = 4, shareX = T, shareY = T, margin = 0.01)%>%
+  sp <- subplot(p, nrows = 4, shareX = T, shareY = T, margin = 0.01)%>%
     layout(
       showlegend = F
     )

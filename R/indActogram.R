@@ -46,7 +46,7 @@ indActogram <- function(data, bin = 30, t.cycle = 24, ind = 1, key = "k.ia") {
                              width = s_per_day*n.plot,
                              by = s_per_day, as.numeric)))
   for (j in 1:length(a[1,])){
-    p[[j]] <- plotly::plot_ly(
+    p[[j]] <- plot_ly(
       # x = seq(0, ((length(a[,j])*(bin/60))-(bin/60)), by = bin/60),
       y = a[,j]/max(a[,j]),
       type = "bar",
@@ -87,7 +87,7 @@ indActogram <- function(data, bin = 30, t.cycle = 24, ind = 1, key = "k.ia") {
       )
   }
 
-  plot.ind.actogram <- plotly::subplot(
+  plot.ind.actogram <- subplot(
     p,
     nrows = length(a[1,]),
     shareX = T,

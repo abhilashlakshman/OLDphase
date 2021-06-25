@@ -27,7 +27,7 @@ rosePlotsWake <- function (data, bin = 30, t.cycle = 24, rm.channels = c()) {
 
   theta <- as.matrix(df[,"ZT"]*360/t.cycle)
 
-  p <- plotly::plot_ly()%>%
+  p <- plot_ly()%>%
     layout(showlegend = FALSE,
            margin = list(
              t = 50,
@@ -91,7 +91,7 @@ rosePlotsWake <- function (data, bin = 30, t.cycle = 24, rm.channels = c()) {
     x = df[j,"Mean"]
     y = theta[j,1]
 
-    p <- plotly::add_trace(p,
+    p <- add_trace(p,
                    r = c(0, x, x, 0),
                    theta = c(0, y-((bin/60)*360/t.cycle), y, 0),
                    type = 'scatterpolar',
