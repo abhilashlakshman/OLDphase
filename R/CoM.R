@@ -10,6 +10,9 @@
 #' @param window A list of vectors, each defining the start and end ZT values of the window of interest. For instance, if users want to define the morning window as ZT21 to ZT03 and evening window as ZT09 to ZT15, then this should be list(c(21,3), c(9,15)). This defaults to list(c(18,6), c(6,18)). For the purposes of the polar plot, data from only the first two windows are used. But, for the data table, users can define as many windows as they like, and the function should work as expected.
 #' @param rm.channels A vector of channels from a DAM monitor that must be discarded from analysis. If channels 1 to 5 must be removed, type in c(1:5). If channels 1 to 5 and 10 to 13 and 15 and 17 must be removed, type in c(1:5,10:13,15,17). Default is to include all individuals.
 #'
+#' @importFrom circular rho.circular circular
+#' @importFrom plotly plot_ly add_trace layout %>% subplot
+#'
 #' @export CoM
 #'
 #'

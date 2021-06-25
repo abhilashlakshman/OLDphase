@@ -11,6 +11,9 @@
 #' @param windows A list of vectors defining the start and end of the windows (in ZT) for morning and evening peaks, respectively around which the algorithm should look for peaks. This defaults to list(c(18,6), c(6,18)). The first window is treated as the window for morning peak, and the second as the window for evening peak.
 #' @param rm.channels All the channels that users want to remove from their averaging. This must be a vector, i.e., channels must be separated by commas. For instance, if users choose to remove channels 1 to 5, 25 and 32, then the input should be either c(1,2,3,4,5,25,32) or c(1:5,25,32). This defaults to an empty vector, meaning no individuals are removed from analysis.
 #'
+#' @importFrom plotly plot_ly add_trace subplot %>% layout
+#' @importFrom pracma findpeaks
+#' @importFrom signal sgolayfilt
 #'
 #' @export peakIdentifier
 #'

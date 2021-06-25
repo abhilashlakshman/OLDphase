@@ -11,6 +11,8 @@
 #' @param eve.win.end Define the end of evening window.
 #' @param rm.channels A vector of channels from a DAM monitor that must be discarded from analysis. If channels 1 to 5 must be removed, type in c(1:5). If channels 1 to 5 and 10 to 13 and 15 and 17 must be removed, type in c(1:5,10:13,15,17). Default is to include all individuals.
 #'
+#' @importFrom plotly plot_ly add_trace layout %>% subplot
+#'
 #' @export anticipationAct
 #'
 #'

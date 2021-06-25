@@ -6,6 +6,9 @@
 #' @param data Input data file. The input for this function must be the output of the function binData(). See ??binData().
 #' @param bin Intervals in which data are saved (in minutes). This defaults to 30.
 #' @param t.cycle Define the period of the environmental cycle or a single day in hours. This defaults to 24.
+#' 
+#' @importFrom zoo rollapply
+#' @importFrom plotly plot_ly add_trace layout %>% subplot
 #'
 #'
 #' @export allActograms

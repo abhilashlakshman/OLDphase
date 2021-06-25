@@ -8,6 +8,8 @@
 #' @param t.cycle Define the period of the environmental cycle or a single day in hours. This defaults to 24.
 #' @param ind The channel number (or individual) whose actogram must be plotted.
 #'
+#' @importFrom zoo rollapply
+#' @importFrom plotly plot_ly add_trace layout %>% subplot
 #'
 #' @export indActogram
 #'

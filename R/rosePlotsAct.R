@@ -8,6 +8,7 @@
 #' @param t.cycle Define the period of the environmental cycle or a single day in hours. This defaults to 24. This value must be the same as that for binData().
 #' @param rm.channels All the channels that users want to remove from their averaging. This must be a vector, i.e., channels must be separated by commas. For instance, if users choose to remove channels 1 to 5, 25 and 32, then the input should be either c(1,2,3,4,5,25,32) or c(1:5,25,32). This defaults to an empty vector, meaning no individuals are removed from analysis.
 #'
+#' @importFrom plotly plot_ly add_trace layout %>% subplot
 #'
 #' @export rosePlotsAct
 #'

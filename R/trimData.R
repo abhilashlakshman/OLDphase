@@ -10,6 +10,7 @@
 #' @param bin Intervals in which data are sampled (in minutes). This defaults to 1.
 #' @param t.cycle Define the period of the environmental cycle or a single day in hours. This defaults to 24.
 #'
+#' @importFrom lubridate hour minute
 #'
 #' @export trimData
 #'

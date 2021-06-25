@@ -9,6 +9,7 @@
 #' @param average.type Define how the averaging must be done for computing profiles. There are 4 choices; i) "Flies": This will average over all the flies for the number of days of data that there are, and produce an averaged time-series, ii) "Days": This will average activity over all the days but for each fly and provide 32 averaged plots, iii) "Both": This will average over both flies and days and provide one composite average profile, iv) "None": This will not average and produce any plots; the output will be the same as the input file. This defaults to "Both".
 #' @param rm.channels All the channels that users want to remove from their averaging. This must be a vector, i.e., channels must be separated by commas. For instance, if users choose to remove channels 1 to 5, 25 and 32, then the input should be either c(1,2,3,4,5,25,32) or c(1:5,25,32). This defaults to an empty vector, meaning no individuals are removed from analysis.
 #'
+#' @importFrom plotly plot_ly add_trace layout %>% subplot
 #'
 #' @export profilesAct
 #'

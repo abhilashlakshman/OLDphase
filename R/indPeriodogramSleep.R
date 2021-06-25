@@ -12,6 +12,9 @@
 #' @param time.res Resolution of periods (in minutes) to analyse while using the ChiSquare periodogram. For instance, if users wish to scan periods from low.per to high.per in the following manner: 16, 16.5, 17, 17.5, and so on, then time.res must be 30. This defaults to 20.
 #' @param ind The channel number (or individual) whose periodogram must be plotted.
 #'
+#' @importFrom zeitgebr chi_sq_periodogram ac_periodogram ls_periodogram
+#' @importFrom behavr hours mins
+#' @importFrom plotly plot_ly add_trace layout %>% subplot
 #'
 #' @export indPeriodogramSleep
 #'
@@ -22,7 +25,9 @@
 #' ind.periodogram.sleep <- indPeriodogramSleep(data = sd, ind = 10)
 
 indPeriodogramSleep <- function(data, bin = 30, method = "ChiSquare", low.per = 16, high.per = 32, alpha = 0.05, time.res = 20, ind) {
+  
   library(zeitgebr)
+  library(behavr)
   library(plotly)
 
   raw <- data[,(1+ind)]
