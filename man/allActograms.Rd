@@ -18,7 +18,7 @@ This function generates a composite figure with actograms for all flies in a DAM
 }
 \examples{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
-n.days = 5, bin = 1, t.cycle = 24)
+n.days = 3, bin = 1, t.cycle = 24)
 bd <- binData(data = td)
 actograms <- allActograms(data = bd)
 }

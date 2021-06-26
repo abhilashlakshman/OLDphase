@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
-#' n.days = 10, bin = 1, t.cycle = 24)
+#' n.days = 3, bin = 1, t.cycle = 24)
 #' pks <- peakIdentifier(data = td)
 
 peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist = 100, peak.ht.scal = 0.5, windows = list(c(18,6), c(18,6)), rm.channels = c()) {

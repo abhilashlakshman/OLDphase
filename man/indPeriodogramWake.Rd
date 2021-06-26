@@ -37,7 +37,7 @@ This function generates a periodogram for the "wake" data of a single fly. The o
 }
 \examples{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
-n.days = 10, bin = 1, t.cycle = 24)
+n.days = 3, bin = 1, t.cycle = 24)
 wd <- wakeData(td)
 ind.periodogram.wake <- indPeriodogramWake(data = wd, ind = 2)
 }

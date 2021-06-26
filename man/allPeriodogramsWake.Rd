@@ -34,7 +34,7 @@ This function generates a composite figure with periodogram plots for all flies 
 }
 \examples{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
-n.days = 4, bin = 1, t.cycle = 24)
+n.days = 3, bin = 1, t.cycle = 24)
 wd <- wakeData(td)
 all.periodograms.wake <- allPeriodogramsWake(data = wd)
 }

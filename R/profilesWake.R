@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
-#' n.days = 10, bin = 1, t.cycle = 24)
+#' n.days = 3, bin = 1, t.cycle = 24)
 #' wd <- wakeData(td)
 #' pro <- profilesWake(data = wd)
 

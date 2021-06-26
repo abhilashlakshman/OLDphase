@@ -21,6 +21,6 @@ In a particular bin, sleep is calculated as the total minutes of inactivity equa
 }
 \examples{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
-n.days = 4, bin = 1, t.cycle = 24)
+n.days = 3, bin = 1, t.cycle = 24)
 actograms.wake <- allActogramsWake(data = td)
 }

@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
-#' n.days = 10, bin = 1, t.cycle = 24)
+#' n.days = 3, bin = 1, t.cycle = 24)
 #' all.periodograms.act <- allPeriodogramsAct(data = td)
 
 allPeriodogramsAct <- function(data, bin = 1, method = "ChiSquare", low.per = 16, high.per = 32, alpha = 0.05, time.res = 20) {
