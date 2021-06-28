@@ -19,7 +19,7 @@
 #' @examples
 #' td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 #' n.days = 3, bin = 1, t.cycle = 24)
-#' somnograms <- allSomnograms(data = td)
+#' somnograms <- allSomnograms(data = td[,1:15])
 
 allSomnograms <- function(data, sleep.def = 5, bin = 30, t.cycle = 24) {
   requireNamespace("plotly")

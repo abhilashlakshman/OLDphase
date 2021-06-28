@@ -22,5 +22,5 @@ In a particular bin, sleep is calculated as the total minutes of inactivity equa
 \examples{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 n.days = 3, bin = 1, t.cycle = 24)
-somnograms <- allSomnograms(data = td)
+somnograms <- allSomnograms(data = td[,1:15])
 }

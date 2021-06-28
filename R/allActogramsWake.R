@@ -19,7 +19,7 @@
 #' @examples
 #' td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 #' n.days = 3, bin = 1, t.cycle = 24)
-#' actograms.wake <- allActogramsWake(data = td)
+#' actograms.wake <- allActogramsWake(data = td[,1:15])
 
 
 allActogramsWake <- function(data, sleep.def = 5, bin = 30, t.cycle = 24) {
