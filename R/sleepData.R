@@ -17,8 +17,7 @@
 #' @examples
 #' td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 #' n.days = 4, bin = 1, t.cycle = 24)
-#' sd <- sleepData(data = td)
-#' sd <- sleepData(data = td, sleep.def = 20, bin = 60, t.cycle = 24)
+#' sd <- sleepData(data = td[,1:15])
 
 sleepData <- function(data, sleep.def = c(5), bin = 30, t.cycle = 24) {
   raw <- data[,-c(1:10)]
