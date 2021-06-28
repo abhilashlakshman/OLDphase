@@ -34,6 +34,6 @@ This function generates a composite figure with periodogram plots for all flies 
 }
 \examples{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
-n.days = 3, bin = 1, t.cycle = 24)
-all.periodograms.act <- allPeriodogramsAct(data = td)
+n.days = 5, bin = 1, t.cycle = 24)
+all.periodograms.act <- allPeriodogramsAct(data = td[,1:15])
 }
