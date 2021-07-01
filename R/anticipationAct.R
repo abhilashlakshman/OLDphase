@@ -14,6 +14,13 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot add_lines
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return If method = "Slope", a \code{list} with two items, else a \code{matrix} \code{array} with 32 rows (one for each fly) and 3 columns (Channel/Fly identity, Morning anticipation index and Evening anticipation index).
+#' \description{ If method = "Slope":
+#' \item {Plot.morn}{A \code{plotly} \code{htmlwidget} with the anticipation estimates for the morning window.}
+#' \item {Plot.eve}{A \code{plotly} \code{htmlwidget} with the anticipation estimates for the evening window.}
+#' \item {Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 3 columns (Channel/Fly identity, Morning anticipation index and Evening anticipation index).}
+#' }
 #'
 #' @export anticipationAct
 #'

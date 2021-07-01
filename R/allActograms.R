@@ -11,6 +11,8 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return A \code{plotly} \code{htmlwidget} with 32 actograms in a 4-by-8 array.
 #'
 #'
 #' @export allActograms

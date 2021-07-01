@@ -15,6 +15,8 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return A \code{plotly} \code{htmlwidget} with the actogram (wake data) of a user defined fly.
 #'
 #' @export indActogramWake
 #'
@@ -22,9 +24,8 @@
 #' td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 #' n.days = 10, bin = 1, t.cycle = 24)
 #' ind.actogram.wake <- indActogramWake(data = td, ind = 7)
-#' ind.actogram.wake <- indActogramWake(data = td, sleep.def = 20, bin = 60, t.cycle = 24, ind = 14)
 
-indActogramWake <- function(data, sleep.def = 5, bin = 30, t.cycle = 24, ind = 1, key.wake = 1) {
+indActogramWake <- function(data, sleep.def = c(5), bin = 30, t.cycle = 24, ind = 1, key.wake = 1) {
   
   requireNamespace("plotly")
   requireNamespace("zoo")
@@ -44,18 +45,31 @@ indActogramWake <- function(data, sleep.def = 5, bin = 30, t.cycle = 24, ind = 1
     raw[,1:length(raw[1,])][raw[,1:length(raw[1,])] == 0] <- 1
     raw[,1:length(raw[1,])][raw[,1:length(raw[1,])] == -1] <- 0
     
-    binned_full_run.wake <- (length(raw[,1])/1440)*s_per_day
+    binned_full_run.wake <- (length(raw[,1])/(60*t.cycle))*s_per_day
     wake <- matrix(NA, nrow = binned_full_run.wake, ncol = 1)
     index.wake <- seq(1, length(raw[,1]), by = bin)
     
-    for (i in 1:length(index.wake)) {
-      x <- raw[index.wake[i]:(index.wake[i]+bin-1),1]
-      y <- rle(x)
-      d_y <- as.data.frame(unclass(y))
-      # dd_y <- subset(d_y, values == 1 & lengths >= sleep.def)
-      dd_y <- subset(d_y, (d_y$values == 1 & d_y$lengths < sleep.def) | (d_y$values == 0))
-      wake[i,1] <- sum(dd_y$lengths)
+    if (length(sleep.def) == 1) {
+      for (i in 1:length(index.wake)) {
+        x <- raw[index.wake[i]:(index.wake[i]+bin-1),1]
+        y <- rle(x)
+        d_y <- as.data.frame(unclass(y))
+        # dd_y <- subset(d_y, values == 1 & lengths >= sleep.def)
+        dd_y <- subset(d_y, (d_y$values == 1 & d_y$lengths < sleep.def[1]) | (d_y$values == 0))
+        wake[i,1] <- sum(dd_y$lengths)
+      }
+    } else if (length(sleep.def) == 2) {
+      for (i in 1:length(index.wake)) {
+        x <- raw[index.wake[i]:(index.wake[i]+bin-1),1]
+        y <- rle(x)
+        d_y <- as.data.frame(unclass(y))
+        # dd_y <- subset(d_y, values == 1 & lengths >= sleep.def)
+        dd_y <- subset(d_y, (d_y$values == 1 & d_y$lengths < sleep.def[1] | d_y$lengths > sleep.def[2]) | (d_y$values == 0))
+        wake[i,1] <- sum(dd_y$lengths)
+      }
     }
+    
+    
     data <- rbind(dummy, wake, dummy)
     
     p <- list()

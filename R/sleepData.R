@@ -5,12 +5,18 @@
 #' In a particular bin, sleep is calculated as the total minutes of inactivity equal to or greater than the defined threshold (sleep.def; typically, 5-minutes).
 #'
 #' @param data Input data file. The input for this function must be the output of the function trimData(). See ??trimData().
-#' @param sleep.def Definition of sleep. Traditionally, a single bout of sleep is defined as any duration of inactivity that is equal to or greater than 5-minutes. However, sometimes it may be of interest to examine longer bouts of sleep; sleep.def allows users to change the definition of sleep. This defaults to 5.
+#' @param sleep.def Definition of sleep. Traditionally, a single bout of sleep is defined as any duration of inactivity that is equal to or greater than 5-minutes. However, sometimes it may be of interest to examine longer bouts of sleep or specific bout durations; sleep.def allows users to change the definition of sleep. The default input is a single value vector of value 5. If users wish to analyse sleep only between 5 to 20 mins, the input must be c(5,20).
 #' @param bin Intervals in which data are saved (in minutes). This defaults to 30. The value of bin cannot be lower than that of sleep.def.
 #' @param t.cycle Define the period of the environmental cycle or a single day in hours. This defaults to 24.
 #'
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return A \code{data.frame} with 33 columns (number of rows depends on number of days, and the input parameters of this function):
+#' \describe{
+#' \item {ZT}{ZT values starting at ZT00 (time at which light turn ON).}
+#' \item {I1:I32}{Columns of binned sleep data (each column represents a single fly).}
+#' }
 #' 
 #' @export sleepData
 #'
@@ -27,7 +33,7 @@ sleepData <- function(data, sleep.def = c(5), bin = 30, t.cycle = 24) {
   raw[,1:length(raw[1,])][raw[,1:length(raw[1,])] == 0] <- 1
   raw[,1:length(raw[1,])][raw[,1:length(raw[1,])] == -1] <- 0
 
-  binned_full_run.sleep <- (length(raw[,1])/1440)*s_per_day
+  binned_full_run.sleep <- (length(raw[,1])/(60*t.cycle))*s_per_day
   sleep <- matrix(NA, nrow = binned_full_run.sleep, ncol = 32)
   index.sleep <- seq(1, length(raw[,1]), by = bin)
 
@@ -48,7 +54,7 @@ sleepData <- function(data, sleep.def = c(5), bin = 30, t.cycle = 24) {
         x <- raw[index.sleep[i]:(index.sleep[i]+bin-1),j]
         y <- rle(x)
         d_y <- as.data.frame(unclass(y))
-        dd_y <- subset(d_y, d_y$values == 1 & d_y$lengths >= sleep.def[1] & d_y$lengths < sleep.def[2])
+        dd_y <- subset(d_y, d_y$values == 1 & d_y$lengths >= sleep.def[1] & d_y$lengths <= sleep.def[2])
         sleep[i,j] <- sum(dd_y$lengths)
       }
     }

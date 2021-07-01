@@ -11,6 +11,8 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return A \code{plotly} {htmlwidget} with rose plots for wakefulness data.
 #'
 #' @export rosePlotsWake
 #'

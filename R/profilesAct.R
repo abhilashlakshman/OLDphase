@@ -12,6 +12,41 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return Except when average.type = "None", a \code{list} with two items. When average.type = "None", input file is returned.
+#' \description{
+#' If average.type = "Days":
+#' \item {Profiles}{
+#' \description{
+#' \item {ZT}{Column with ZT values.}
+#' \item {I1:I32}{Data averaged over days for each of 32 flies.}
+#' \item {ZT}{Column with ZT values.}
+#' \item {I1:I32}{SEM (across days) for each of 32 flies.}
+#' }
+#' }
+#' \item {Plot}{A \code{plotly} \code{htmlwidget} with the activity profiles in a 4-by-8 array.}
+#' If average.type = "Flies":
+#' \item {Profiles}{
+#' \description{
+#' \item {ZT}{Column with ZT values.}
+#' \item {Mean}{Data averaged over all 32 flies for the entire duration of chosen days.}
+#' \item {SEM}{SEM (across flies).}
+#' }
+#' }
+#' \item {Plot}{A \code{plotly} \code{htmlwidget} with the activity time-series.}
+#' If average.type = "Both":
+#' \item {Profiles}{
+#' \description{
+#' \item {ZT}{Column with ZT values.}
+#' \item {Mean}{Data averaged over all days and all 32 flies.}
+#' \item {SEM}{SEM (across flies).}
+#' }
+#' }
+#' \item {Plot}{A \code{plotly} \code{htmlwidget} with the activity profile.}
+#' }
+#' 
+#' 
+#' If average.type = "Days", "Flies" or "Both", this function returns a list with two elements. The first is a data frame called "Profiles", and the second is a plotly object called "Plot". If the average.type = "None", this function returns the input data set as is. When averaged over "Days", "Profiles" will be a data frame with 66 columns. Column 1 is ZT followed by 32 columns of activity data (averaged over days) for 32 flies. The 34th column is again ZT and the next 32 columns have the SEM values across cycles for each fly at that time point. The number of rows depends on the output bin size used in the binData function. When averaged over "Flies", "Profiles" will be a data frame with 3 columns. Column 1 is ZT, Column 2 is the averaged activity data over all flies, and Column 3 is the SEM across flies for that time point. The number of rows depends on the number of days of data and the output bin size used in the binData function. When averaged over "Both", "Profiles" will be a data frame with 3 columns. Column 1 is ZT, Column 2 is the averaged activity data over all flies and all days, and Column 3 is the SEM across flies for that time point. The number of rows depends on the output bin size used in the binData function.
 #'
 #' @export profilesAct
 #'

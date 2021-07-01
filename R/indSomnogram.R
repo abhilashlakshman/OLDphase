@@ -15,6 +15,8 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return A \code{plotly} \code{htmlwidget} with the somnogram of a user defined fly.
 #'
 #' @export indSomnogram
 #'
@@ -23,7 +25,7 @@
 #' n.days = 10, bin = 1, t.cycle = 24)
 #' somnogram <- indSomnogram(data = td, ind = 21)
 
-indSomnogram <- function(data, sleep.def = 5, bin = 30, t.cycle = 24, ind = 1, key.somno = 1) {
+indSomnogram <- function(data, sleep.def = c(5), bin = 30, t.cycle = 24, ind = 1, key.somno = 1) {
 
   requireNamespace("plotly")
   requireNamespace("zoo")
@@ -43,17 +45,29 @@ indSomnogram <- function(data, sleep.def = 5, bin = 30, t.cycle = 24, ind = 1, k
     raw[,1:length(raw[1,])][raw[,1:length(raw[1,])] == 0] <- 1
     raw[,1:length(raw[1,])][raw[,1:length(raw[1,])] == -1] <- 0
     
-    binned_full_run.sleep <- (length(raw[,1])/1440)*s_per_day
+    binned_full_run.sleep <- (length(raw[,1])/(60*t.cycle))*s_per_day
     sleep <- matrix(NA, nrow = binned_full_run.sleep, ncol = 1)
     index.sleep <- seq(1, length(raw[,1]), by = bin)
     
-    for (i in 1:length(index.sleep)) {
-      x <- raw[index.sleep[i]:(index.sleep[i]+bin-1),1]
-      y <- rle(x)
-      d_y <- as.data.frame(unclass(y))
-      dd_y <- subset(d_y, d_y$values == 1 & d_y$lengths >= sleep.def)
-      sleep[i,1] <- sum(dd_y$lengths)
+    if (length(sleep.def) == 1) {
+      for (i in 1:length(index.sleep)) {
+        x <- raw[index.sleep[i]:(index.sleep[i]+bin-1),1]
+        y <- rle(x)
+        d_y <- as.data.frame(unclass(y))
+        dd_y <- subset(d_y, d_y$values == 1 & d_y$lengths >= sleep.def[1])
+        sleep[i,1] <- sum(dd_y$lengths)
+      }
+    } else if (length(sleep.def) == 2) {
+      for (i in 1:length(index.sleep)) {
+        x <- raw[index.sleep[i]:(index.sleep[i]+bin-1),1]
+        y <- rle(x)
+        d_y <- as.data.frame(unclass(y))
+        dd_y <- subset(d_y, d_y$values == 1 & d_y$lengths >= sleep.def[1] & d_y$lengths <= sleep.def[2])
+        sleep[i,1] <- sum(dd_y$lengths)
+      }
     }
+    
+    
     data <- rbind(dummy, sleep, dummy)
     
     p <- list()

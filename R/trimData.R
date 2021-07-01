@@ -13,6 +13,8 @@
 #' @importFrom lubridate hour minute
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return A \code{data.frame} containing trimmed data.
 #'
 #' @export trimData
 #'

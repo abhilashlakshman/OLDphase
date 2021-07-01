@@ -17,6 +17,8 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return A \code{plotly} \code{htmlwidget} with the individual periodogram of a user defined fly.
 #'
 #' @export indPeriodogramWake
 #'
@@ -26,7 +28,7 @@
 #' wd <- wakeData(td)
 #' ind.periodogram.wake <- indPeriodogramWake(data = wd, ind = 2)
 
-indPeriodogramWake <- function(data, bin = 30, method = "ChiSquare", low.per = 16, high.per = 32, alpha = 0.05, time.res = 20, ind = 25) {
+indPeriodogramWake <- function(data, bin = 30, method = "ChiSquare", low.per = 16, high.per = 32, alpha = 0.05, time.res = 20, ind = 1) {
   
   requireNamespace("zeitgebr")
   requireNamespace("behavr")

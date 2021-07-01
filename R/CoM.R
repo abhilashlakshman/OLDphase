@@ -14,6 +14,12 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return A \code{list} with two items:
+#' \desription{
+#' \item {Plot}{A \code{plotly} \code{htmlwidget} with the center of mass plotted and averages plotted for each window.}
+#' \item {Data}{A \code{data.frame} with 32 rows (one for each fly) and 1 + (number of user defined windows * 2) columns (First column contains channel/fly identity and the remaning columns contain the fly-wise consolidation and center of mass values.)}
+#' }
 #'
 #' @export CoM
 #'

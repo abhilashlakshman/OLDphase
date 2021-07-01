@@ -12,6 +12,38 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return Except when average.type = "None", a \code{list} with two items. When average.type = "None", input file is returned.
+#' \description{
+#' If average.type = "Days":
+#' \item {Profiles}{
+#' \description{
+#' \item {ZT}{Column with ZT values.}
+#' \item {I1:I32}{Data averaged over days for each of 32 flies.}
+#' \item {ZT}{Column with ZT values.}
+#' \item {I1:I32}{SEM (across days) for each of 32 flies.}
+#' }
+#' }
+#' \item {Plot}{A \code{plotly} \code{htmlwidget} with the wakefulness profiles in a 4-by-8 array.}
+#' If average.type = "Flies":
+#' \item {Profiles}{
+#' \description{
+#' \item {ZT}{Column with ZT values.}
+#' \item {Mean}{Data averaged over all 32 flies for the entire duration of chosen days.}
+#' \item {SEM}{SEM (across flies).}
+#' }
+#' }
+#' \item {Plot}{A \code{plotly} \code{htmlwidget} with the wakefulness time-series.}
+#' If average.type = "Both":
+#' \item {Profiles}{
+#' \description{
+#' \item {ZT}{Column with ZT values.}
+#' \item {Mean}{Data averaged over all days and all 32 flies.}
+#' \item {SEM}{SEM (across flies).}
+#' }
+#' }
+#' \item {Plot}{A \code{plotly} \code{htmlwidget} with the wakefulness profile.}
+#' }
 #'
 #' @export profilesWake
 #'

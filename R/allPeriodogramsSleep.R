@@ -16,6 +16,12 @@
 #' @importFrom plotly plot_ly add_trace layout %>% subplot
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
+#' 
+#' @return A \code{list} with two items:
+#' \description{
+#' \item {Plots}{A \code{plotly} \code{htmlwidget} with all periodograms in a 4-by-8 array.}
+#' \item {Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 2 columns (Period and Adjusted Power).}
+#' }
 #'
 #' @export allPeriodogramsSleep
 #'
