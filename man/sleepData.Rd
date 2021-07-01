@@ -18,8 +18,8 @@ sleepData(data, sleep.def = c(5), bin = 30, t.cycle = 24)
 \value{
 A \code{data.frame} with 33 columns (number of rows depends on number of days, and the input parameters of this function):
 \describe{
-\item {ZT}{ZT values starting at ZT00 (time at which light turn ON).}
-\item {I1:I32}{Columns of binned sleep data (each column represents a single fly).}
+\item{ZT}{ZT values starting at ZT00 (time at which light turn ON).}
+\item{I1:I32}{Columns of binned sleep data (each column represents a single fly).}
 }
 }
 \description{

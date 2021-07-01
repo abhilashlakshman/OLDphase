@@ -31,9 +31,9 @@ allPeriodogramsWake(
 }
 \value{
 A \code{list} with two items:
-\description{
-\item {Plots}{A \code{plotly} \code{htmlwidget} with all periodograms in a 4-by-8 array.}
-\item {Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 2 columns (Period and Adjusted Power).}
+\describe{
+\item{Plots}{A \code{plotly} \code{htmlwidget} with all periodograms in a 4-by-8 array.}
+\item{Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 2 columns (Period and Adjusted Power).}
 }
 }
 \description{

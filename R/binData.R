@@ -13,8 +13,8 @@
 #' 
 #' @return A \code{matrix} \code{array} with 33 columns (number of rows depends on number of days, and the input parameters of this function):
 #' \describe{
-#' \item {ZT}{ZT values starting at ZT00 (time at which light turn ON).}
-#' \item {I1:I32}{Columns of binned locomotor activity data (each column represents a single fly).}
+#' \item{ZT}{ZT values starting at ZT00 (time at which light turn ON).}
+#' \item{I1:I32}{Columns of binned locomotor activity data (each column represents a single fly).}
 #' }
 #'
 #' @export binData

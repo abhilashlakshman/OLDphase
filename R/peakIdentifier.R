@@ -18,9 +18,9 @@
 #' @importFrom stats aggregate fitted lm na.omit sd
 #' 
 #' @return A \code{list} with two items:
-#' \description{
-#' \item {Plots}{A \code{plotly} \code{htmlwidget} with all the averaged activity overlayed with the smoothed data and markers to point out identified peaks in a 4-by-8 array.}
-#' \item {Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 3 columns (Channel/Fly identity, Morning peak phase and Evening peak phase (measured in ZT)).}
+#' \describe{
+#' \item{Plots}{A \code{plotly} \code{htmlwidget} with all the averaged activity overlayed with the smoothed data and markers to point out identified peaks in a 4-by-8 array.}
+#' \item{Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 3 columns (Channel/Fly identity, Morning peak phase and Evening peak phase (measured in ZT)).}
 #' }
 #' 
 #'

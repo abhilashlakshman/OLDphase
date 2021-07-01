@@ -17,14 +17,14 @@ sleepStat(input, sleep.def = c(5), t.cycle = 24, photoperiod = 12)
 }
 \value{
 A \code{matrix} \code{array} matrix with 32 rows (one for each fly) and 7 columns:
-\description{
-\item {Channel}{Fly identity.}
-\item {Day.BoutNumber}{Number of sleep bouts in the user defined day time.}
-\item {Day.BoutDuration}{Mean sleep duration in the user defined day time.}
-\item {Day.Latency}{Time taken for the first sleep bout to occur in the user defined day time.}
-\item {Night.BoutNumber}{Number of sleep bouts in the user defined night time.}
-\item {Night.BoutDuration}{Mean sleep duration in the user defined night time.}
-\item {Night.Latency}{Time taken for the first sleep bout to occur in the user defined night time.}
+\describe{
+\item{Channel}{Fly identity.}
+\item{Day.BoutNumber}{Number of sleep bouts in the user defined day time.}
+\item{Day.BoutDuration}{Mean sleep duration in the user defined day time.}
+\item{Day.Latency}{Time taken for the first sleep bout to occur in the user defined day time.}
+\item{Night.BoutNumber}{Number of sleep bouts in the user defined night time.}
+\item{Night.BoutDuration}{Mean sleep duration in the user defined night time.}
+\item{Night.Latency}{Time taken for the first sleep bout to occur in the user defined night time.}
 }
 }
 \description{
