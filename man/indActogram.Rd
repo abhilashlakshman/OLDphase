@@ -17,6 +17,9 @@ indActogram(data, bin = 30, t.cycle = 24, ind = 1, key.acto = 1)
 
 \item{key.acto}{Key for reactive input tables in the shiny app.}
 }
+\value{
+A \code{plotly} \code{htmlwidget} with the actogram of a user defined fly.
+}
 \description{
 Allows users to generate individual actograms. The input for this function must be the output of the binData() function. The output of this function is a plotly object.
 }

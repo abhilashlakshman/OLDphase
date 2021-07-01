@@ -29,6 +29,13 @@ allPeriodogramsSleep(
 
 \item{time.res}{Resolution of periods (in minutes) to analyse while using the ChiSquare periodogram. For instance, if users wish to scan periods from low.per to high.per in the following manner: 16, 16.5, 17, 17.5, and so on, then time.res must be 30. This defaults to 20.}
 }
+\value{
+A \code{list} with two items:
+\description{
+\item {Plots}{A \code{plotly} \code{htmlwidget} with all periodograms in a 4-by-8 array.}
+\item {Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 2 columns (Period and Adjusted Power).}
+}
+}
 \description{
 This function generates a composite figure with periodogram plots for all flies in a DAM scanned monitor file. Input for this function must be an output from the sleepData() function. The output of this function is a list with two components - (a) large plotly object with periodogram plots for all flies, and (b) a table which has channel wise information of significant period and adjusted power values, from the chosen time-series analysis method. This function requires the packages "plotly" and "zeitgebr".
 }

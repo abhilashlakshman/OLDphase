@@ -23,6 +23,39 @@ profilesSleep(
 
 \item{rm.channels}{All the channels that users want to remove from their averaging. This must be a vector, i.e., channels must be separated by commas. For instance, if users choose to remove channels 1 to 5, 25 and 32, then the input should be either c(1,2,3,4,5,25,32) or c(1:5,25,32). This defaults to an empty vector, meaning no individuals are removed from analysis.}
 }
+\value{
+Except when average.type = "None", a \code{list} with two items. When average.type = "None", input file is returned.
+\description{
+If average.type = "Days":
+\item {Profiles}{
+\description{
+\item {ZT}{Column with ZT values.}
+\item {I1:I32}{Data averaged over days for each of 32 flies.}
+\item {ZT}{Column with ZT values.}
+\item {I1:I32}{SEM (across days) for each of 32 flies.}
+}
+}
+\item {Plot}{A \code{plotly} \code{htmlwidget} with the sleep profiles in a 4-by-8 array.}
+If average.type = "Flies":
+\item {Profiles}{
+\description{
+\item {ZT}{Column with ZT values.}
+\item {Mean}{Data averaged over all 32 flies for the entire duration of chosen days.}
+\item {SEM}{SEM (across flies).}
+}
+}
+\item {Plot}{A \code{plotly} \code{htmlwidget} with the sleep time-series.}
+If average.type = "Both":
+\item {Profiles}{
+\description{
+\item {ZT}{Column with ZT values.}
+\item {Mean}{Data averaged over all days and all 32 flies.}
+\item {SEM}{SEM (across flies).}
+}
+}
+\item {Plot}{A \code{plotly} \code{htmlwidget} with the sleep profile.}
+}
+}
 \description{
 Users can compute average profiles and visualise the same. Averages can be performed either over Flies, Days, Both or None. Except in the case of "None" the output of this function will be a list with two elements. One is the generated plot and the other is a table with the activity values and corresponding standard errors of the mean.
 }

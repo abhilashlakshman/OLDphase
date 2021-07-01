@@ -19,6 +19,9 @@ trimData(data, start.date, start.time, n.days, bin = 1, t.cycle = 24)
 
 \item{t.cycle}{Define the period of the environmental cycle or a single day in hours. This defaults to 24.}
 }
+\value{
+A \code{data.frame} containing trimmed data.
+}
 \description{
 trimData() allows users to define start date, start time and number of days for analysing data sets.
 }

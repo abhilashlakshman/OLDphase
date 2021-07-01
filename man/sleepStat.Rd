@@ -9,11 +9,23 @@ sleepStat(input, sleep.def = c(5), t.cycle = 24, photoperiod = 12)
 \arguments{
 \item{input}{Input data file. The input for this function must be the output of the function trimData(). See ??trimData().}
 
-\item{sleep.def}{Definition of sleep. Traditionally, a single bout of sleep is defined as any duration of inactivity that is equal to or greater than 5-minutes. However, sometimes it may be of interest to examine longer bouts of sleep; sleep.def allows users to change the definition of sleep. This defaults to 5.}
+\item{sleep.def}{Definition of sleep. Traditionally, a single bout of sleep is defined as any duration of inactivity that is equal to or greater than 5-minutes. However, sometimes it may be of interest to examine longer bouts of sleep or specific bout durations; sleep.def allows users to change the definition of sleep. The default input is a single value vector of value 5. If users wish to analyse sleep only between 5 to 20 mins, the input must be c(5,20).}
 
 \item{t.cycle}{Define the period of the environmental cycle or a single day in hours. This defaults to 24.}
 
 \item{photoperiod}{Duration (in hours) of what can be considered day-phase. This defaults to 12.}
+}
+\value{
+A \code{matrix} \code{array} matrix with 32 rows (one for each fly) and 7 columns:
+\description{
+\item {Channel}{Fly identity.}
+\item {Day.BoutNumber}{Number of sleep bouts in the user defined day time.}
+\item {Day.BoutDuration}{Mean sleep duration in the user defined day time.}
+\item {Day.Latency}{Time taken for the first sleep bout to occur in the user defined day time.}
+\item {Night.BoutNumber}{Number of sleep bouts in the user defined night time.}
+\item {Night.BoutDuration}{Mean sleep duration in the user defined night time.}
+\item {Night.Latency}{Time taken for the first sleep bout to occur in the user defined night time.}
+}
 }
 \description{
 This function allows users to estimate day-time and night-time average sleep bout duration, number and latency. Sleep bout latency is defined as the time taken (in minutes) for the occurrence of the first sleep bout since respective transitions. The input for this function must be the output from the trimData() function. The output of this function is a matrix which contains fly-wise (each row) data. Sleep statistics for several sleep data can be examined by users; (i) data = "Sleep" will provide sleep statistics for standard sleep data wherein any contiguous bout of inactivity that is longer than or equal to 5-minutes is considered sleep, (ii) data = "DeepSleep" will provide sleep statistics for only all the deep sleep bouts, (iii) data = "LightSleep" will provide sleep statistics for only all the light sleep bouts, (iv) data = "LongDeepSleep" and (v) data = "ShortDeepSleep" will provide sleep statistics for the long bouts of deep sleep and short bouts of deep sleep, respectively, (vi) data = "ShortLightSleep", (vii) data = "InterLightSleep", and (viii) data = "LongLightSleep" will provide sleep statistics for short, intermediate and long bouts of light sleep, respectively. See ??deepSleepData() and ??lightSleepData() for information on deep sleep and light sleep categories and definitions.

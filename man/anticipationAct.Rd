@@ -29,6 +29,14 @@ anticipationAct(
 
 \item{rm.channels}{A vector of channels from a DAM monitor that must be discarded from analysis. If channels 1 to 5 must be removed, type in c(1:5). If channels 1 to 5 and 10 to 13 and 15 and 17 must be removed, type in c(1:5,10:13,15,17). Default is to include all individuals.}
 }
+\value{
+If method = "Slope", a \code{list} with two items, else a \code{matrix} \code{array} with 32 rows (one for each fly) and 3 columns (Channel/Fly identity, Morning anticipation index and Evening anticipation index).
+\description{ If method = "Slope":
+\item {Plot.morn}{A \code{plotly} \code{htmlwidget} with the anticipation estimates for the morning window.}
+\item {Plot.eve}{A \code{plotly} \code{htmlwidget} with the anticipation estimates for the evening window.}
+\item {Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 3 columns (Channel/Fly identity, Morning anticipation index and Evening anticipation index).}
+}
+}
 \description{
 This function calculates anticipation of activity in user-defined windows. The input for this function must be the output of the trimData() function. There are three choices for the estimation of anticipation. The "Slope" method simply finds best-fitting lines to activity data in the defined windows (by using linear regressions). The slope of this line, for each fly, is used as a measure of anticipation. The "Stoleru" method is based on the estimates used in the paper by Stoleru et al., 2004 (https://doi.org/10.1038/nature02926). The authors estimate progressive increase in activity before environmental transitions, scaled by the startle response (immediately post-transition). The "Harrisingh" method is based on the method used by Harrisingh et al., 2007 (10.1523/JNEUROSCI.3680-07.2007). In this method, the authors simply examine activity in a 3-hour interval before environmental transitions, scaled by activity in the 6-hour interval before the transitions. Only if method = "Slope", the output of this function is a list with three elements, i.e., plots of the regression line along with the activity in the morning window, plots of the regression line along with the activity in the evening window, and a table with the morning and evening anticipation values. In the other two cases, the output of this function is only a table with the morning and evening anticipation values. No plots will be generated.
 }

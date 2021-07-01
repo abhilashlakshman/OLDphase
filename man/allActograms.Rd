@@ -13,6 +13,9 @@ allActograms(data, bin = 30, t.cycle = 24)
 
 \item{t.cycle}{Define the period of the environmental cycle or a single day in hours. This defaults to 24.}
 }
+\value{
+A \code{plotly} \code{htmlwidget} with 32 actograms in a 4-by-8 array.
+}
 \description{
 This function generates a composite figure with actograms for all flies in a DAM scanned monitor file. Input for this function must be an output from the binData() function. The output of this function is a large plotly object. This function requires the packages "plotly" and "zoo".
 }

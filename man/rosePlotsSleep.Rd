@@ -15,6 +15,9 @@ rosePlotsSleep(data, bin = 30, t.cycle = 24, rm.channels = c())
 
 \item{rm.channels}{All the channels that users want to remove from their averaging. This must be a vector, i.e., channels must be separated by commas. For instance, if users choose to remove channels 1 to 5, 25 and 32, then the input should be either c(1,2,3,4,5,25,32) or c(1:5,25,32). This defaults to an empty vector, meaning no individuals are removed from analysis.}
 }
+\value{
+#' @return A \code{plotly} {htmlwidget} with rose plots for sleep data.
+}
 \description{
 Users can generate rose plots for the averaged sleep data. The input for this function must be output from sleepData(). The output of this function is a plotly object. By default the averaging of profiles is done over all flies and days.
 }

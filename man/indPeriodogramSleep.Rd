@@ -12,7 +12,7 @@ indPeriodogramSleep(
   high.per = 32,
   alpha = 0.05,
   time.res = 20,
-  ind
+  ind = 1
 )
 }
 \arguments{
@@ -31,6 +31,9 @@ indPeriodogramSleep(
 \item{time.res}{Resolution of periods (in minutes) to analyse while using the ChiSquare periodogram. For instance, if users wish to scan periods from low.per to high.per in the following manner: 16, 16.5, 17, 17.5, and so on, then time.res must be 30. This defaults to 20.}
 
 \item{ind}{The channel number (or individual) whose periodogram must be plotted.}
+}
+\value{
+A \code{plotly} \code{htmlwidget} with the individual periodogram of a user defined fly.
 }
 \description{
 This function generates a periodogram for the sleep data of a single fly. The output of this function is a plotly object.

@@ -6,7 +6,7 @@
 \usage{
 indSomnogram(
   data,
-  sleep.def = 5,
+  sleep.def = c(5),
   bin = 30,
   t.cycle = 24,
   ind = 1,
@@ -25,6 +25,9 @@ indSomnogram(
 \item{ind}{The channel number (or individual) whose periodogram must be plotted.}
 
 \item{key.somno}{Key for reactive input tables in the shiny app.}
+}
+\value{
+A \code{plotly} \code{htmlwidget} with the somnogram of a user defined fly.
 }
 \description{
 This function generates a somnogram for a single fly. Input for this function must be an output from the trimData() function. The output of this function is a plotly object.

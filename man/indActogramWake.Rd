@@ -6,7 +6,7 @@
 \usage{
 indActogramWake(
   data,
-  sleep.def = 5,
+  sleep.def = c(5),
   bin = 30,
   t.cycle = 24,
   ind = 1,
@@ -26,6 +26,9 @@ indActogramWake(
 
 \item{key.wake}{Key for reactive input tables in the shiny app.}
 }
+\value{
+A \code{plotly} \code{htmlwidget} with the actogram (wake data) of a user defined fly.
+}
 \description{
 This function allows users to generate individual actograms for "wake" data. Input for this function must be an output from the trimData() function. The output of this function is a plotly object.
 In a particular bin, sleep is calculated as the total minutes of inactivity equal to or greater than the defined threshold (sleep.def; typically, 5-minutes). Wake is defined as the total time spent by the fly not sleeping. See also wakeData().
@@ -34,5 +37,4 @@ In a particular bin, sleep is calculated as the total minutes of inactivity equa
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 n.days = 10, bin = 1, t.cycle = 24)
 ind.actogram.wake <- indActogramWake(data = td, ind = 7)
-ind.actogram.wake <- indActogramWake(data = td, sleep.def = 20, bin = 60, t.cycle = 24, ind = 14)
 }

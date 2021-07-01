@@ -9,11 +9,18 @@ wakeData(data, sleep.def = c(5), bin = 30, t.cycle = 24)
 \arguments{
 \item{data}{Input data file. The input for this function must be the output of the function trimData(). See ??trimData().}
 
-\item{sleep.def}{Definition of sleep. Traditionally, a single bout of sleep is defined as any duration of inactivity that is equal to or greater than 5-minutes. However, sometimes it may be of interest to examine longer bouts of sleep; sleep.def allows users to change the definition of sleep. This defaults to 5.}
+\item{sleep.def}{Definition of sleep. Traditionally, a single bout of sleep is defined as any duration of inactivity that is equal to or greater than 5-minutes. However, sometimes it may be of interest to examine longer bouts of sleep or specific bout durations; sleep.def allows users to change the definition of sleep. The default input is a single value vector of value 5. If users wish to analyse sleep only between 5 to 20 mins, the input must be c(5,20).}
 
 \item{bin}{Intervals in which data are saved (in minutes). This defaults to 30. The value of bin cannot be lower than that of sleep.def.}
 
 \item{t.cycle}{Define the period of the environmental cycle or a single day in hours. This defaults to 24.}
+}
+\value{
+A \code{data.frame} with 33 columns (number of rows depends on number of days, and the input parameters of this function):
+\describe{
+\item {ZT}{ZT values starting at ZT00 (time at which light turn ON).}
+\item {I1:I32}{Columns of binned wakefulness data (each column represents a single fly).}
+}
 }
 \description{
 Allows users to bin data sets into intervals of time different from the data collection interval. The input for this function must be the output of the trimData() function. The output of this function is a data frame. The first column of which stores Zeitgeber Time values (assuming that the start.time in the trimData() function was set at Zeitgeber Time 00). All subsequent columns have binned "wake" data for each fly.

@@ -29,6 +29,13 @@ peakIdentifier(
 
 \item{rm.channels}{All the channels that users want to remove from their averaging. This must be a vector, i.e., channels must be separated by commas. For instance, if users choose to remove channels 1 to 5, 25 and 32, then the input should be either c(1,2,3,4,5,25,32) or c(1:5,25,32). This defaults to an empty vector, meaning no individuals are removed from analysis.}
 }
+\value{
+A \code{list} with two items:
+\description{
+\item {Plots}{A \code{plotly} \code{htmlwidget} with all the averaged activity overlayed with the smoothed data and markers to point out identified peaks in a 4-by-8 array.}
+\item {Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 3 columns (Channel/Fly identity, Morning peak phase and Evening peak phase (measured in ZT)).}
+}
+}
 \description{
 This function generates a list of outputs. The first element is a plot of raw activity along with the smoothed data and objectively estimated phases of peak of activity data. Smoothing of activity is done using a Savitzky-Golay filter. The input of this function must be the output of the trimData function. This function requires the packages "plotly", "pracma" and "signal".
 }

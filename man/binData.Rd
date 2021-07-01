@@ -15,6 +15,13 @@ binData(data, input.bin = 1, output.bin = 30, t.cycle = 24)
 
 \item{t.cycle}{Define the period of the environmental cycle or a single day in hours. This defaults to 24.}
 }
+\value{
+A \code{matrix} \code{array} with 33 columns (number of rows depends on number of days, and the input parameters of this function):
+\describe{
+\item {ZT}{ZT values starting at ZT00 (time at which light turn ON).}
+\item {I1:I32}{Columns of binned locomotor activity data (each column represents a single fly).}
+}
+}
 \description{
 Allows users to bin data sets into intervals of time different from the data collection interval. The input for this function must be the output of the trimData() function. The output of this function is a data frame. The first column of which stores Zeitgeber Time values (assuming that the start.time in the trimData() function was set at Zeitgeber Time 00). All subsequent columns have binned activity data for each fly.
 }
