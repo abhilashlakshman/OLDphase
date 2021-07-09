@@ -10,7 +10,7 @@ peakIdentifier(
   filt.length = 51,
   min.peak.dist = 100,
   peak.ht.scal = 0.5,
-  windows = list(c(18, 6), c(18, 6)),
+  windows = list(c(18, 6), c(6, 18)),
   rm.channels = c()
 )
 }
@@ -37,7 +37,7 @@ A \code{list} with two items:
 }
 }
 \description{
-This function generates a list of outputs. The first element is a plot of raw activity along with the smoothed data and objectively estimated phases of peak of activity data. Smoothing of activity is done using a Savitzky-Golay filter. The input of this function must be the output of the trimData function. This function requires the packages "plotly", "pracma" and "signal".
+This function generates a list of outputs. The first element is a plot of raw activity along with the smoothed data and objectively estimated phases of peak of activity data. Smoothing of activity is done using a Savitzky-Golay filter. The input of this function must be the output of the trimData function. This function requires the packages "plotly", "pracma" and "signal". As of now, this function works only for 24-hour T-cycles.
 }
 \examples{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",

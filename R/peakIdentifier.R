@@ -1,7 +1,7 @@
 #' Phase identifier for activity data
 #'
 #' @description
-#' This function generates a list of outputs. The first element is a plot of raw activity along with the smoothed data and objectively estimated phases of peak of activity data. Smoothing of activity is done using a Savitzky-Golay filter. The input of this function must be the output of the trimData function. This function requires the packages "plotly", "pracma" and "signal".
+#' This function generates a list of outputs. The first element is a plot of raw activity along with the smoothed data and objectively estimated phases of peak of activity data. Smoothing of activity is done using a Savitzky-Golay filter. The input of this function must be the output of the trimData function. This function requires the packages "plotly", "pracma" and "signal". As of now, this function works only for 24-hour T-cycles.
 #'
 #' @param data Input data file. The input for this function must be the output of the function trimData(). See ??trimData(). This assumes that the output from trimData has data binned in 1-min intervals.
 #' @param filt.order The filter order. This defaults to 3.
@@ -31,7 +31,7 @@
 #' n.days = 3, bin = 1, t.cycle = 24)
 #' pks <- peakIdentifier(data = td)
 
-peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist = 100, peak.ht.scal = 0.5, windows = list(c(18,6), c(18,6)), rm.channels = c()) {
+peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist = 100, peak.ht.scal = 0.5, windows = list(c(18,6), c(6,18)), rm.channels = c()) {
   
   requireNamespace("plotly")
   requireNamespace("pracma")

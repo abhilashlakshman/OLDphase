@@ -1,6 +1,6 @@
 Package: phase
 Title: Analyse Biological Time-Series Data
-Version: 1.1.1
+Version: 1.1.2
 Authors@R: 
     person(given = "Lakshman",
            family = "Abhilash",

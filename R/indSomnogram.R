@@ -130,7 +130,7 @@ indSomnogram <- function(data, sleep.def = c(5), bin = 30, t.cycle = 24, ind = 1
       p,
       nrows = length(a[1,]),
       shareX = T,
-      margin = 0.0
+      margin = 0.0, widths = NULL, heights = NULL
     )%>%
       layout(
         showlegend = F,
