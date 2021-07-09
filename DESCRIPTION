@@ -1,6 +1,8 @@
 Package: phase
 Title: Analyse Biological Time-Series Data
 Version: 1.1.2
+Author: Lakshman Abhilash [aut, cre] (<https://orcid.org/0000-0002-9933-8989>)
+Maintainer: Lakshman Abhilash <labhilash@gc.cuny.edu>
 Authors@R: 
     person(given = "Lakshman",
            family = "Abhilash",
@@ -15,8 +17,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 NeedsCompilation: no
 Packaged: 2021-02-13 16:47:45 UTC; abhilashlakshman
-Author: Lakshman Abhilash [aut, cre] (<https://orcid.org/0000-0002-9933-8989>)
-Maintainer: Lakshman Abhilash <labhilash@gc.cuny.edu>
 Imports: circular, lubridate, plotly, pracma, signal, zeitgebr, zoo, behavr
+Remotes: ropensci/plotly#1974
 Depends: 
     R (>= 2.10)
