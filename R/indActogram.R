@@ -98,11 +98,13 @@ indActogram <- function(data, bin = 30, t.cycle = 24, ind = 1, key.acto = 1) {
         )
     }
     
+    n.row = length(a[1,])
+    
     plot.ind.actogram <- subplot(
       p,
-      nrows = length(a[1,]),
+      nrows = n.row,
       shareX = T,
-      margin = 0.0, widths = NULL, heights = NULL
+      margin = 0.0, heights = rep(1/n.row, n.row)
     )%>%
       layout(
         showlegend = F,
