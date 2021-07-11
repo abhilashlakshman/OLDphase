@@ -34,7 +34,9 @@ This function generates a somnogram for a single fly. Input for this function mu
 In a particular bin, sleep is calculated as the total minutes of inactivity equal to or greater than the defined threshold (sleep.def; typically, 5-minutes).
 }
 \examples{
+\dontrun{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 n.days = 10, bin = 1, t.cycle = 24)
 somnogram <- indSomnogram(data = td, ind = 21)
+}
 }

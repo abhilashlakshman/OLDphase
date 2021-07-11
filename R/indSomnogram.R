@@ -21,9 +21,12 @@
 #' @export indSomnogram
 #'
 #' @examples
+#' \dontrun{
 #' td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 #' n.days = 10, bin = 1, t.cycle = 24)
 #' somnogram <- indSomnogram(data = td, ind = 21)
+#' }
+
 
 indSomnogram <- function(data, sleep.def = c(5), bin = 30, t.cycle = 24, ind = 1, key.somno = 1) {
 

@@ -24,8 +24,10 @@ A \code{plotly} \code{htmlwidget} with the actogram of a user defined fly.
 Allows users to generate individual actograms. The input for this function must be the output of the binData() function. The output of this function is a plotly object.
 }
 \examples{
+\dontrun{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 n.days = 10, bin = 1, t.cycle = 24)
 bd <- binData(td)
 ind.actogram <- indActogram(data = bd, bin = 30, ind = 2)
+}
 }

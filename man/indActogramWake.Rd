@@ -34,7 +34,9 @@ This function allows users to generate individual actograms for "wake" data. Inp
 In a particular bin, sleep is calculated as the total minutes of inactivity equal to or greater than the defined threshold (sleep.def; typically, 5-minutes). Wake is defined as the total time spent by the fly not sleeping. See also wakeData().
 }
 \examples{
+\dontrun{
 td <- trimData(data = df, start.date = "19 Dec 20", start.time = "21:00",
 n.days = 10, bin = 1, t.cycle = 24)
 ind.actogram.wake <- indActogramWake(data = td, ind = 7)
+}
 }
