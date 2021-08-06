@@ -25,26 +25,20 @@
 #' }
 #' }
 #' \item{Plot}{A \code{plotly} \code{htmlwidget} with the sleep profiles in a 4-by-8 array.}
-#' }
-#' \describe{
+#' 
 #' If average.type = "Flies":
 #' \item{Profiles}{
-#' \describe{
 #' \item{ZT}{Column with ZT values.}
 #' \item{Mean}{Data averaged over all 32 flies for the entire duration of chosen days.}
 #' \item{SEM}{SEM (across flies).}
 #' }
-#' }
 #' \item{Plot}{A \code{plotly} \code{htmlwidget} with the sleep time-series.}
-#' }
-#' \describe{
+#' 
 #' If average.type = "Both":
 #' \item{Profiles}{
-#' \describe{
 #' \item{ZT}{Column with ZT values.}
 #' \item{Mean}{Data averaged over all days and all 32 flies.}
 #' \item{SEM}{SEM (across flies).}
-#' }
 #' }
 #' \item{Plot}{A \code{plotly} \code{htmlwidget} with the sleep profile.}
 #' }

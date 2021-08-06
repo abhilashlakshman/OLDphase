@@ -24,29 +24,23 @@
 #' \item{I1:I32}{SEM (across days) for each of 32 flies.}
 #' }
 #' }
-#' \item{Plot}{A \code{plotly} \code{htmlwidget} with the wakefulness profiles in a 4-by-8 array.}
-#' }
-#' \describe{
+#' \item{Plot}{A \code{plotly} \code{htmlwidget} with the wake profiles in a 4-by-8 array.}
+#' 
 #' If average.type = "Flies":
 #' \item{Profiles}{
-#' \describe{
 #' \item{ZT}{Column with ZT values.}
 #' \item{Mean}{Data averaged over all 32 flies for the entire duration of chosen days.}
 #' \item{SEM}{SEM (across flies).}
 #' }
-#' }
-#' \item{Plot}{A \code{plotly} \code{htmlwidget} with the wakefulness time-series.}
-#' }
-#' \describe{
+#' \item{Plot}{A \code{plotly} \code{htmlwidget} with the wake time-series.}
+#' 
 #' If average.type = "Both":
 #' \item{Profiles}{
-#' \describe{
 #' \item{ZT}{Column with ZT values.}
 #' \item{Mean}{Data averaged over all days and all 32 flies.}
 #' \item{SEM}{SEM (across flies).}
 #' }
-#' }
-#' \item{Plot}{A \code{plotly} \code{htmlwidget} with the wakefulness profile.}
+#' \item{Plot}{A \code{plotly} \code{htmlwidget} with the wake profile.}
 #' }
 #'
 #' @export profilesWake
