@@ -186,6 +186,13 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
           showlegend = F
         )%>%
         layout(
+          margin = list(
+            t = 50,
+            b = 50,
+            l = 100,
+            r = 100,
+            pad = 2
+          ),
           polar = list(
             angularaxis = list(
               direction = 'clockwise',
@@ -393,6 +400,13 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
           showlegend = F
         )%>%
         layout(
+          margin = list(
+            t = 50,
+            b = 50,
+            l = 100,
+            r = 100,
+            pad = 2
+          ),
           polar = list(
             angularaxis = list(
               direction = 'clockwise',
@@ -600,6 +614,13 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
           showlegend = F
         )%>%
         layout(
+          margin = list(
+            t = 50,
+            b = 50,
+            l = 100,
+            r = 100,
+            pad = 2
+          ),
           polar = list(
             angularaxis = list(
               direction = 'clockwise',

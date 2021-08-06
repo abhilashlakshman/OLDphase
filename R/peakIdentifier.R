@@ -51,6 +51,60 @@ peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist
     
     p <- list()
     
+    f1 <- list(
+      family = "Arial, sans-serif",
+      size = 20,
+      color = "black"
+    )
+    f2 <- list(
+      family = "Arial, sans-serif",
+      size = 14,
+      color = "black"
+    )
+    ax <- list(
+      showgrid = F,
+      showline = T,
+      titlefont = f1,
+      tickfont = f2,
+      title = "ZT (h)",
+      linecolor = "black",
+      # linewidth = 4,
+      # mirror = TRUE,
+      autotick = FALSE,
+      ticks = "inside",
+      tick0 = 0,
+      dtick = 12*60/5,
+      ticklen = 7,
+      tickcolor = "black",
+      ticktext = as.list(
+        c("18", "00", "06", "12", "18")
+      ),
+      tickvals = as.list(
+        c(0, seq(6*60/5, length(dat[,1]), by = 6*60/5))
+      ),
+      tickmode = "array",
+      # tickwidth = 4,
+      range = c(0, length(dat[,1])+1)
+    )
+    ay <- list(
+      showgrid = F,
+      showline = T,
+      titlefont = f1,
+      tickfont = f2,
+      title = "Activity",
+      linecolor = "black",
+      # linewidth = 4,
+      # mirror = TRUE,
+      autotick = TRUE,
+      ticks = "inside",
+      tick0 = 0,
+      # dtick = max(table.period.power[,"Power"], na.rm = T)/6,
+      ticklen = 7,
+      tickcolor = "black"
+      # range = c(0, max(table.period.power[,"Power"]))
+      # tickwidth = 4,
+    )
+    
     for (i in 1:32) {
       ind = i
       if (requireNamespace("signal", quietly = T)) {
@@ -91,8 +145,12 @@ peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist
           marker = list(
             color = "blue",
             symbol = "triangle-down",
-            size = 20
+            size = 15
           )
+        )%>%
+        layout(
+          xaxis = ax,
+          yaxis = ay
         )
     }
     
@@ -119,7 +177,7 @@ peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist
       eve.peak.times <- windows[[2]]
       
       pks.morn <- pks.zt[pks.zt < morn.peak.times[2] | pks.zt > morn.peak.times[1]]
-      pks.eve <- pks.zt[pks.zt < eve.peak.times[1] & pks.zt > eve.peak.times[2]]
+      pks.eve <- pks.zt[pks.zt > eve.peak.times[1] & pks.zt < eve.peak.times[2]]
       
       if (pracma::isempty(pks.eve)) {
         phase[i, "Evening Peak"] = NA

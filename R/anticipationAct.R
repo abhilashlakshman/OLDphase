@@ -10,13 +10,16 @@
 #' @param eve.win.start Define the start of evening window in ZT.
 #' @param eve.win.end Define the end of evening window.
 #' @param rm.channels A vector of channels from a DAM monitor that must be discarded from analysis. If channels 1 to 5 must be removed, type in c(1:5). If channels 1 to 5 and 10 to 13 and 15 and 17 must be removed, type in c(1:5,10:13,15,17). Default is to include all individuals.
+#' @param max.y.morn Set the upper limit of the y-axis in the plot for morning window.
+#' @param max.y.eve Set the upper limit of the y-axis in the plot for evening window.
 #'
 #' @importFrom plotly plot_ly add_trace layout %>% subplot add_lines
 #' @importFrom grDevices rgb
 #' @importFrom stats aggregate fitted lm na.omit sd
 #' 
 #' @return If method = "Slope", a \code{list} with two items, else a \code{matrix} \code{array} with 32 rows (one for each fly) and 3 columns (Channel/Fly identity, Morning anticipation index and Evening anticipation index).
-#' \describe{ If method = "Slope":
+#' \describe{
+#' If method = "Slope":
 #' \item{Plot.morn}{A \code{plotly} \code{htmlwidget} with the anticipation estimates for the morning window.}
 #' \item{Plot.eve}{A \code{plotly} \code{htmlwidget} with the anticipation estimates for the evening window.}
 #' \item{Data}{A \code{matrix} \code{array} with 32 rows (one for each fly) and 3 columns (Channel/Fly identity, Morning anticipation index and Evening anticipation index).}
@@ -33,7 +36,7 @@
 #'                            eve.win.start = 9, eve.win.end = 12,
 #'                            rm.channels = c())
 
-anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start, eve.win.start, eve.win.end, rm.channels = c()) {
+anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start, eve.win.start, eve.win.end, rm.channels = c(), max.y.morn = "auto", max.y.eve = "auto") {
 
   requireNamespace("plotly")
   # library(plotly)
@@ -71,95 +74,191 @@ anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start
         color = "black"
       )
       
-      p.morn <- plot_ly(
-        x = df.ant.morn[,1],
-        y = rowMeans(df.ant.morn[,-1]),
-        type = "scatter",
-        mode = "lines",
-        line = list(
-          color = "red",
-          width = 2
-        ),
-        name = "Mean Activity"
-      )%>%
-        layout(
-          showlegend = F,
-          xaxis = list(
-            showgrid = F,
-            showline = T,
-            titlefont = f1,
-            tickfont = f2,
-            title = "ZT (h)",
-            linecolor = "black",
-            # linewidth = 4,
-            mirror = TRUE,
-            autotick = TRUE,
-            ticks = "inside",
-            tickcolor = "black",
-            # tickwidth = 4,
-            range = c(df.ant.morn[1,1]-0.5, df.ant.morn[length(df.ant.morn[,1]),1]+0.5)
+      if (max.y.morn == "auto") {
+        p.morn <- plot_ly(
+          x = df.ant.morn[,1],
+          y = rowMeans(df.ant.morn[,-1]),
+          type = "scatter",
+          mode = "lines",
+          line = list(
+            color = "red",
+            width = 2
           ),
-          yaxis = list(
-            showgrid = F,
-            showline = T,
-            titlefont = f1,
-            tickfont = f2,
-            title = "Activity",
-            linecolor = "black",
-            # linewidth = 4,
-            mirror = TRUE,
-            autotick = TRUE,
-            ticks = "inside",
-            tickcolor = "black",
-            range = c(0, max(c(rowMeans(df.ant.morn[,-1])))+5)
-            # tickwidth = 4,
+          name = "Mean Activity"
+        )%>%
+          layout(
+            showlegend = F,
+            xaxis = list(
+              showgrid = F,
+              showline = T,
+              titlefont = f1,
+              tickfont = f2,
+              title = "ZT (h)",
+              linecolor = "black",
+              # linewidth = 4,
+              mirror = TRUE,
+              autotick = TRUE,
+              ticks = "inside",
+              tickcolor = "black",
+              # tickwidth = 4,
+              range = c(df.ant.morn[1,1]-0.5, df.ant.morn[length(df.ant.morn[,1]),1]+0.5)
+            ),
+            yaxis = list(
+              showgrid = F,
+              showline = T,
+              titlefont = f1,
+              tickfont = f2,
+              title = "Activity",
+              linecolor = "black",
+              # linewidth = 4,
+              mirror = TRUE,
+              autotick = TRUE,
+              ticks = "inside",
+              tickcolor = "black",
+              range = c(0, max(c(rowMeans(df.ant.morn[,-1])))+5)
+              # tickwidth = 4,
+            )
           )
-        )
+      } else {
+        p.morn <- plot_ly(
+          x = df.ant.morn[,1],
+          y = rowMeans(df.ant.morn[,-1]),
+          type = "scatter",
+          mode = "lines",
+          line = list(
+            color = "red",
+            width = 2
+          ),
+          name = "Mean Activity"
+        )%>%
+          layout(
+            showlegend = F,
+            xaxis = list(
+              showgrid = F,
+              showline = T,
+              titlefont = f1,
+              tickfont = f2,
+              title = "ZT (h)",
+              linecolor = "black",
+              # linewidth = 4,
+              mirror = TRUE,
+              autotick = TRUE,
+              ticks = "inside",
+              tickcolor = "black",
+              # tickwidth = 4,
+              range = c(df.ant.morn[1,1]-0.5, df.ant.morn[length(df.ant.morn[,1]),1]+0.5)
+            ),
+            yaxis = list(
+              showgrid = F,
+              showline = T,
+              titlefont = f1,
+              tickfont = f2,
+              title = "Activity",
+              linecolor = "black",
+              # linewidth = 4,
+              mirror = TRUE,
+              autotick = TRUE,
+              ticks = "inside",
+              tickcolor = "black",
+              range = c(0, max.y.morn)
+              # tickwidth = 4,
+            )
+          )
+      }
       
-      p.eve <- plot_ly(
-        x = df.ant.eve[,1],
-        y = rowMeans(df.ant.eve[,-1]),
-        type = "scatter",
-        mode = "lines",
-        line = list(
-          color = "red",
-          width = 2
-        ),
-        name = "Mean Activity"
-      )%>%
-        layout(
-          showlegend = F,
-          xaxis = list(
-            showgrid = F,
-            showline = T,
-            titlefont = f1,
-            tickfont = f2,
-            title = "ZT (h)",
-            linecolor = "black",
-            # linewidth = 4,
-            mirror = TRUE,
-            autotick = TRUE,
-            ticks = "inside",
-            tickcolor = "black",
-            # tickwidth = 4,
-            range = c(df.ant.eve[1,1]-0.5, df.ant.eve[length(df.ant.eve[,1]),1]+0.5)
+      if (max.y.eve == "auto") {
+        p.eve <- plot_ly(
+          x = df.ant.eve[,1],
+          y = rowMeans(df.ant.eve[,-1]),
+          type = "scatter",
+          mode = "lines",
+          line = list(
+            color = "red",
+            width = 2
           ),
-          yaxis = list(
-            showgrid = F,
-            showline = T,
-            titlefont = f1,
-            tickfont = f2,
-            title = "Activity",
-            linecolor = "black",
-            # linewidth = 4,
-            mirror = TRUE,
-            autotick = TRUE,
-            ticks = "inside",
-            tickcolor = "black",
-            range = c(0, max(c(rowMeans(df.ant.eve[,-1])))+5)
-            # tickwidth = 4,
+          name = "Mean Activity"
+        )%>%
+          layout(
+            showlegend = F,
+            xaxis = list(
+              showgrid = F,
+              showline = T,
+              titlefont = f1,
+              tickfont = f2,
+              title = "ZT (h)",
+              linecolor = "black",
+              # linewidth = 4,
+              mirror = TRUE,
+              autotick = TRUE,
+              ticks = "inside",
+              tickcolor = "black",
+              # tickwidth = 4,
+              range = c(df.ant.eve[1,1]-0.5, df.ant.eve[length(df.ant.eve[,1]),1]+0.5)
+            ),
+            yaxis = list(
+              showgrid = F,
+              showline = T,
+              titlefont = f1,
+              tickfont = f2,
+              title = "Activity",
+              linecolor = "black",
+              # linewidth = 4,
+              mirror = TRUE,
+              autotick = TRUE,
+              ticks = "inside",
+              tickcolor = "black",
+              range = c(0, max(c(rowMeans(df.ant.eve[,-1])))+5)
+              # tickwidth = 4,
+            )
           )
-        )
+      } else {
+        p.eve <- plot_ly(
+          x = df.ant.eve[,1],
+          y = rowMeans(df.ant.eve[,-1]),
+          type = "scatter",
+          mode = "lines",
+          line = list(
+            color = "red",
+            width = 2
+          ),
+          name = "Mean Activity"
+        )%>%
+          layout(
+            showlegend = F,
+            xaxis = list(
+              showgrid = F,
+              showline = T,
+              titlefont = f1,
+              tickfont = f2,
+              title = "ZT (h)",
+              linecolor = "black",
+              # linewidth = 4,
+              mirror = TRUE,
+              autotick = TRUE,
+              ticks = "inside",
+              tickcolor = "black",
+              # tickwidth = 4,
+              range = c(df.ant.eve[1,1]-0.5, df.ant.eve[length(df.ant.eve[,1]),1]+0.5)
+            ),
+            yaxis = list(
+              showgrid = F,
+              showline = T,
+              titlefont = f1,
+              tickfont = f2,
+              title = "Activity",
+              linecolor = "black",
+              # linewidth = 4,
+              mirror = TRUE,
+              autotick = TRUE,
+              ticks = "inside",
+              tickcolor = "black",
+              range = c(0, max.y.eve)
+              # tickwidth = 4,
+            )
+          )
+      }
+      
+      
       
       anticipation <- matrix(NA, nrow = (length(averaged.vals[1,])-1), ncol = 3)
       colnames(anticipation) <- c("Channel", "Morning", "Evening")

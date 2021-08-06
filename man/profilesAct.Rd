@@ -36,6 +36,8 @@ If average.type = "Days":
 }
 }
 \item{Plot}{A \code{plotly} \code{htmlwidget} with the activity profiles in a 4-by-8 array.}
+}
+\describe{
 If average.type = "Flies":
 \item{Profiles}{
 \describe{
@@ -45,6 +47,8 @@ If average.type = "Flies":
 }
 }
 \item{Plot}{A \code{plotly} \code{htmlwidget} with the activity time-series.}
+}
+\describe{
 If average.type = "Both":
 \item{Profiles}{
 \describe{

@@ -25,6 +25,8 @@
 #' }
 #' }
 #' \item{Plot}{A \code{plotly} \code{htmlwidget} with the sleep profiles in a 4-by-8 array.}
+#' }
+#' \describe{
 #' If average.type = "Flies":
 #' \item{Profiles}{
 #' \describe{
@@ -34,6 +36,8 @@
 #' }
 #' }
 #' \item{Plot}{A \code{plotly} \code{htmlwidget} with the sleep time-series.}
+#' }
+#' \describe{
 #' If average.type = "Both":
 #' \item{Profiles}{
 #' \describe{
@@ -142,13 +146,13 @@ profilesSleep <- function(data, bin = 30, t.cycle = 24, average.type = "Both", r
             title = paste("Sleep (min/", bin, "-min)", sep = ""),
             linecolor = "black",
             mirror = TRUE,
-            autotick = FALSE,
+            autotick = TRUE,
             ticks = "inside",
             tick0 = 0,
             dtick = max(output[,"Mean"])/6,
             ticklen = 7,
-            tickcolor = "black",
-            range = c(0, max(output[,"Mean"]+output[,"SEM"])+5)
+            tickcolor = "black"
+            # range = c(0, max(output[,"Mean"]+output[,"SEM"])+5)
           )
         )
       out <- list(
@@ -244,16 +248,17 @@ profilesSleep <- function(data, bin = 30, t.cycle = 24, average.type = "Both", r
                 size = 14,
                 color = "black"
               ),
+              title = "Sleep",
               # title = paste("Sleep (mins/", bin, "-min)", sep = ""),
               linecolor = "black",
               mirror = F,
-              autotick = FALSE,
+              autotick = TRUE,
               ticks = "inside",
               tick0 = 0,
               dtick = max.val/5,
               ticklen = 7,
-              tickcolor = "black",
-              range = c(0, max.val+5)
+              tickcolor = "black"
+              # range = c(0, max.val+5)
             )
           )
       }
@@ -346,13 +351,13 @@ profilesSleep <- function(data, bin = 30, t.cycle = 24, average.type = "Both", r
             title = paste("Sleep (mins/", bin, "-min)", sep = ""),
             linecolor = "black",
             mirror = TRUE,
-            autotick = FALSE,
+            autotick = TRUE,
             ticks = "inside",
             tick0 = 0,
             dtick = max(output[,"Mean"])/6,
             ticklen = 7,
-            tickcolor = "black",
-            range = c(0, max(output[,"Mean"]+output[,"SEM"])+5)
+            tickcolor = "black"
+            # range = c(0, max(output[,"Mean"]+output[,"SEM"])+5)
           )
         )
       
