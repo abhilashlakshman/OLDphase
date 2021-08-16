@@ -18,9 +18,9 @@
 #' If average.type = "Days":
 #' \item{Profiles}{
 #' \describe{
-#' \item{ZT/CT/Time}{Column with ZT/CT/Time values.}
+#' \item{ZT}{Column with ZT values.}
 #' \item{I1:I32}{Data averaged over days for each of 32 flies.}
-#' \item{ZT/CT/Time}{Column with ZT/CT/Time values.}
+#' \item{ZT}{Column with ZT values.}
 #' \item{I1:I32}{SEM (across days) for each of 32 flies.}
 #' }
 #' }
@@ -29,7 +29,7 @@
 #' If average.type = "Flies":
 #' \item{Profiles}{
 #' \describe{
-#' \item{ZT/CT/Time}{Column with ZT/CT/Time values.}
+#' \item{ZT}{Column with ZT values.}
 #' \item{Mean}{Data averaged over all 32 flies for the entire duration of chosen days.}
 #' \item{SEM}{SEM (across flies).}
 #' }
@@ -39,7 +39,7 @@
 #' If average.type = "Both":
 #' \item{Profiles}{
 #' \describe{
-#' \item{ZT/CT/Time}{Column with ZT/CT/Time values.}
+#' \item{ZT}{Column with ZT values.}
 #' \item{Mean}{Data averaged over all days and all 32 flies.}
 #' \item{SEM}{SEM (across flies).}
 #' }
@@ -74,9 +74,9 @@ profilesSleep <- function(data, bin = 30, t.cycle = 24, average.type = "Both", r
       sem <- sd.across.flies/sqrt(length(df[1,]))
       
       output <- cbind(data[,1], averaged.time.series, sem)
-      colnames(output) <- c("ZT/CT/Time", "Mean", "SEM")
+      colnames(output) <- c("ZT", "Mean", "SEM")
       
-      t = table(data[,"ZT/CT/Time"])
+      t = table(data[,"ZT"])
       n.cyc <- as.numeric(t[[1]])
       p <- plot_ly(
         x = seq(1, length(output[,1])),
@@ -165,15 +165,15 @@ profilesSleep <- function(data, bin = 30, t.cycle = 24, average.type = "Both", r
         data[,c(1+rm.channels)] = NA
         df <- data
       }
-      pre.averaged.vals <- aggregate(df, by = list(df[,"ZT/CT/Time"]), FUN = mean)
+      pre.averaged.vals <- aggregate(df, by = list(df[,"ZT"]), FUN = mean)
       averaged.vals <- pre.averaged.vals[,-c(1)]
       
-      pre.sd.vals <- aggregate(df, by = list(df[,"ZT/CT/Time"]), FUN = sd)
+      pre.sd.vals <- aggregate(df, by = list(df[,"ZT"]), FUN = sd)
       sd.vals <- pre.sd.vals[,-c(1,2)]
-      t = table(data[,"ZT/CT/Time"])
+      t = table(data[,"ZT"])
       sem <- sd.vals/sqrt(as.numeric(t[[1]]))
       
-      output <- cbind(averaged.vals, averaged.vals[,"ZT/CT/Time"], sem)
+      output <- cbind(averaged.vals, averaged.vals[,"ZT"], sem)
       colnames(output) <- c(
         colnames(averaged.vals),
         colnames(averaged.vals)
@@ -273,15 +273,15 @@ profilesSleep <- function(data, bin = 30, t.cycle = 24, average.type = "Both", r
       } else {
         df <- data[,-c(1+rm.channels)]
       }
-      pre.averaged.vals <- aggregate(df, by = list(df[,"ZT/CT/Time"]), FUN = mean)
+      pre.averaged.vals <- aggregate(df, by = list(df[,"ZT"]), FUN = mean)
       averaged.vals <- pre.averaged.vals[,-c(1,2)]
       
       mean.profile <- as.matrix(rowMeans(averaged.vals))
       sd.across.flies <- as.matrix(apply(averaged.vals, 1, sd))
       sem <- sd.across.flies/sqrt(length(averaged.vals[1,]))
       
-      output <- cbind(data[1:s_per_day,"ZT/CT/Time"], mean.profile, sem)
-      colnames(output) <- c("ZT/CT/Time", "Mean", "SEM")
+      output <- cbind(data[1:s_per_day,"ZT"], mean.profile, sem)
+      colnames(output) <- c("ZT", "Mean", "SEM")
       
       p <- plot_ly(
         x = seq(1, length(output[,1])),

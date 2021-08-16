@@ -32,7 +32,7 @@ rosePlotsSleep <- function (data, bin = 30, t.cycle = 24, rm.channels = c()) {
     
     df <- pre.df$Profiles
     
-    theta <- as.matrix(df[,"ZT/CT/Time"]*360/t.cycle)
+    theta <- as.matrix(df[,"ZT"]*360/t.cycle)
     
     p <- plot_ly()%>%
       layout(showlegend = FALSE,

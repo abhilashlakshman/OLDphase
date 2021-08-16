@@ -18,7 +18,7 @@ sleepData(data, sleep.def = c(5), bin = 30, t.cycle = 24)
 \value{
 A \code{data.frame} with 33 columns (number of rows depends on number of days, and the input parameters of this function):
 \describe{
-\item{ZT/CT/Time}{ZT/CT values starting at ZT/CT00 (time at which light turn ON or onset of subjective day). In case start time is not ZT/CT00, Time refers to the first window since the user defined start window, which will repeat every user-defined T-cycle.}
+\item{ZT}{ZT values starting at ZT00 (time at which light turns ON).}
 \item{I1:I32}{Columns of binned sleep data (each column represents a single fly).}
 }
 }

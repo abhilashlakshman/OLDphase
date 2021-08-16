@@ -47,7 +47,7 @@ peakIdentifier <- function(data, filt.order = 3, filt.length = 51, min.peak.dist
     pro <- profilesAct(data = bd, bin = 5, t.cycle = 24, average.type = "Days", rm.channels = rm.channels)
     
     pre.dat <- pro$Profiles
-    dat <- rbind(subset(pre.dat, pre.dat$ZT/CT/Time > 18), subset(pre.dat, pre.dat$ZT/CT/Time < 18.01))
+    dat <- rbind(subset(pre.dat, pre.dat$ZT > 18), subset(pre.dat, pre.dat$ZT < 18.01))
     
     p <- list()
     

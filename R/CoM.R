@@ -50,11 +50,11 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
         pre.df <- pre.pre.df$Profiles[,c(1:33)]
         
         if (win.start > win.end) {
-          df1 <- subset(pre.df, pre.df$ZT/CT/Time > win.start)
-          df2 <- subset(pre.df, pre.df$ZT/CT/Time <= win.end)
+          df1 <- subset(pre.df, pre.df$ZT > win.start)
+          df2 <- subset(pre.df, pre.df$ZT <= win.end)
           df <- rbind(df1, df2)
         } else {
-          df <- subset(pre.df, pre.df$ZT/CT/Time > win.start & pre.df$ZT/CT/Time <= win.end)
+          df <- subset(pre.df, pre.df$ZT > win.start & pre.df$ZT <= win.end)
         }
         
         win.size <- length(df[,1] * (bin/60))
@@ -265,11 +265,11 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
         pre.df <- pre.pre.df$Profiles[,c(1:33)]
         
         if (win.start > win.end) {
-          df1 <- subset(pre.df, pre.df$ZT/CT/Time > win.start)
-          df2 <- subset(pre.df, pre.df$ZT/CT/Time <= win.end)
+          df1 <- subset(pre.df, pre.df$ZT > win.start)
+          df2 <- subset(pre.df, pre.df$ZT <= win.end)
           df <- rbind(df1, df2)
         } else {
-          df <- subset(pre.df, pre.df$ZT/CT/Time > win.start & pre.df$ZT/CT/Time <= win.end)
+          df <- subset(pre.df, pre.df$ZT > win.start & pre.df$ZT <= win.end)
         }
         
         win.size <- length(df[,1] * (bin/60))
@@ -480,11 +480,11 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
         pre.df <- pre.pre.df$Profiles[,c(1:33)]
         
         if (win.start > win.end) {
-          df1 <- subset(pre.df, pre.df$ZT/CT/Time > win.start)
-          df2 <- subset(pre.df, pre.df$ZT/CT/Time <= win.end)
+          df1 <- subset(pre.df, pre.df$ZT > win.start)
+          df2 <- subset(pre.df, pre.df$ZT <= win.end)
           df <- rbind(df1, df2)
         } else {
-          df <- subset(pre.df, pre.df$ZT/CT/Time > win.start & pre.df$ZT/CT/Time <= win.end)
+          df <- subset(pre.df, pre.df$ZT > win.start & pre.df$ZT <= win.end)
         }
         
         win.size <- length(df[,1] * (bin/60))
