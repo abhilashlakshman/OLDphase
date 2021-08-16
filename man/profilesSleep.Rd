@@ -29,9 +29,9 @@ Except when average.type = "None", a \code{list} with two items. When average.ty
 If average.type = "Days":
 \item{Profiles}{
 \describe{
-\item{ZT}{Column with ZT values.}
+\item{ZT/CT/Time}{Column with ZT/CT/Time values.}
 \item{I1:I32}{Data averaged over days for each of 32 flies.}
-\item{ZT}{Column with ZT values.}
+\item{ZT/CT/Time}{Column with ZT/CT/Time values.}
 \item{I1:I32}{SEM (across days) for each of 32 flies.}
 }
 }
@@ -40,7 +40,7 @@ If average.type = "Days":
 If average.type = "Flies":
 \item{Profiles}{
 \describe{
-\item{ZT}{Column with ZT values.}
+\item{ZT/CT/Time}{Column with ZT/CT/Time values.}
 \item{Mean}{Data averaged over all 32 flies for the entire duration of chosen days.}
 \item{SEM}{SEM (across flies).}
 }
@@ -50,7 +50,7 @@ If average.type = "Flies":
 If average.type = "Both":
 \item{Profiles}{
 \describe{
-\item{ZT}{Column with ZT values.}
+\item{ZT/CT/Time}{Column with ZT/CT/Time values.}
 \item{Mean}{Data averaged over all days and all 32 flies.}
 \item{SEM}{SEM (across flies).}
 }

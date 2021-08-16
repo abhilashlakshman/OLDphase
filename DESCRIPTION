@@ -1,6 +1,6 @@
 Package: phase
 Title: Analyse Biological Time-Series Data
-Version: 1.1.3
+Version: 1.2.1
 Author: Lakshman Abhilash [aut, cre] (<https://orcid.org/0000-0002-9933-8989>)
 Maintainer: Lakshman Abhilash <labhilash@gc.cuny.edu>
 Authors@R: 

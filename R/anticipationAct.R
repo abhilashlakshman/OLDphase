@@ -55,13 +55,13 @@ anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start
     } else {
       df <- bd[,-c(1+rm.channels)]
     }
-    pre.averaged.vals <- aggregate(df, by = list(df[,"ZT"]), FUN = mean)
+    pre.averaged.vals <- aggregate(df, by = list(df[,"ZT/CT/Time"]), FUN = mean)
     averaged.vals <- pre.averaged.vals[,-c(1)]
     
     if ("Slope" %in% method) {
       
-      df.ant.morn <- subset(averaged.vals, averaged.vals$ZT > morn.win.start - (15/60))
-      df.ant.eve <- subset(averaged.vals, averaged.vals$ZT > eve.win.start - (15/60) & averaged.vals$ZT < eve.win.end + (15/60))
+      df.ant.morn <- subset(averaged.vals, averaged.vals$ZT/CT/Time > morn.win.start - (15/60))
+      df.ant.eve <- subset(averaged.vals, averaged.vals$ZT/CT/Time > eve.win.start - (15/60) & averaged.vals$ZT/CT/Time < eve.win.end + (15/60))
       
       f1 <- list(
         family = "Arial, sans-serif",
@@ -272,8 +272,8 @@ anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start
       }
       
       for (i in 2:length(averaged.vals[1,])) {
-        morn.lin.mod <- lm(df.ant.morn[,i]~df.ant.morn[,"ZT"])
-        eve.lin.mod <- lm(df.ant.eve[,i]~df.ant.eve[,"ZT"])
+        morn.lin.mod <- lm(df.ant.morn[,i]~df.ant.morn[,"ZT/CT/Time"])
+        eve.lin.mod <- lm(df.ant.eve[,i]~df.ant.eve[,"ZT/CT/Time"])
         
         p.morn <- p.morn%>%
           add_lines(
@@ -312,10 +312,10 @@ anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start
       
     } else if ("Stoleru" %in% method) {
       df.ant.morn <- rbind(
-        subset(averaged.vals, averaged.vals$ZT > t.cycle - 3),
+        subset(averaged.vals, averaged.vals$ZT/CT/Time > t.cycle - 3),
         averaged.vals[1,]
       )
-      df.ant.eve <- subset(averaged.vals, averaged.vals$ZT > eve.win.end - 3 & averaged.vals$ZT < eve.win.end + 2)
+      df.ant.eve <- subset(averaged.vals, averaged.vals$ZT/CT/Time > eve.win.end - 3 & averaged.vals$ZT/CT/Time < eve.win.end + 2)
       
       anticipation <- matrix(NA, nrow = (length(averaged.vals[1,])-1), ncol = 3)
       colnames(anticipation) <- c("Channel", "Morning", "Evening")
@@ -339,8 +339,8 @@ anticipationAct <- function(data, method = "Slope", t.cycle = 24, morn.win.start
       return(anticipation)
       
     } else if ("Harrisingh" %in% method) {
-      df.ant.morn <- subset(averaged.vals, averaged.vals$ZT > t.cycle - 6)
-      df.ant.eve <- subset(averaged.vals, averaged.vals$ZT > eve.win.end - 6 & averaged.vals$ZT < eve.win.end + 1)
+      df.ant.morn <- subset(averaged.vals, averaged.vals$ZT/CT/Time > t.cycle - 6)
+      df.ant.eve <- subset(averaged.vals, averaged.vals$ZT/CT/Time > eve.win.end - 6 & averaged.vals$ZT/CT/Time < eve.win.end + 1)
       
       anticipation <- matrix(NA, nrow = (length(averaged.vals[1,])-1), ncol = 3)
       colnames(anticipation) <- c("Channel", "Morning", "Evening")

@@ -50,16 +50,17 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
         pre.df <- pre.pre.df$Profiles[,c(1:33)]
         
         if (win.start > win.end) {
-          df1 <- subset(pre.df, pre.df$ZT > win.start)
-          df2 <- subset(pre.df, pre.df$ZT <= win.end)
+          df1 <- subset(pre.df, pre.df$ZT/CT/Time > win.start)
+          df2 <- subset(pre.df, pre.df$ZT/CT/Time <= win.end)
           df <- rbind(df1, df2)
         } else {
-          df <- subset(pre.df, pre.df$ZT > win.start & pre.df$ZT <= win.end)
+          df <- subset(pre.df, pre.df$ZT/CT/Time > win.start & pre.df$ZT/CT/Time <= win.end)
         }
         
         win.size <- length(df[,1] * (bin/60))
         
-        theta <- as.matrix(seq(0, length(df[,1]), by = (bin/60))*360/win.size)
+        # theta <- as.matrix(seq(0, length(df[,1]), by = (bin/60))*360/win.size)
+        theta <- as.matrix(df[,1] * (360/(win.size * (bin/60))))
         
         sin_theta <- as.matrix(sin(theta*(pi/180)))
         cos_theta <- as.matrix(cos(theta*(pi/180)))
@@ -125,7 +126,7 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
         colnames(output)[phase.index[ii]] <- paste("Phase_", "Window.", ii, sep = "")
       }
       for (ii in 1:length(consol.index)) {
-        colnames(output)[consol.index[ii]] <- paste("Consolidation_", "Window.", ii, sep = "")
+        colnames(output)[consol.index[ii]] <- paste("Consolidation/SleepGate_", "Window.", ii, sep = "")
       }
       
       chan.num.col <- data.frame(
@@ -264,16 +265,17 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
         pre.df <- pre.pre.df$Profiles[,c(1:33)]
         
         if (win.start > win.end) {
-          df1 <- subset(pre.df, pre.df$ZT > win.start)
-          df2 <- subset(pre.df, pre.df$ZT <= win.end)
+          df1 <- subset(pre.df, pre.df$ZT/CT/Time > win.start)
+          df2 <- subset(pre.df, pre.df$ZT/CT/Time <= win.end)
           df <- rbind(df1, df2)
         } else {
-          df <- subset(pre.df, pre.df$ZT > win.start & pre.df$ZT <= win.end)
+          df <- subset(pre.df, pre.df$ZT/CT/Time > win.start & pre.df$ZT/CT/Time <= win.end)
         }
         
         win.size <- length(df[,1] * (bin/60))
         
-        theta <- as.matrix(seq(0, length(df[,1]), by = (bin/60))*360/win.size)
+        # theta <- as.matrix(seq(0, length(df[,1]), by = (bin/60))*360/win.size)
+        theta <- as.matrix(df[,1] * (360/(win.size * (bin/60))))
         
         sin_theta <- as.matrix(sin(theta*(pi/180)))
         cos_theta <- as.matrix(cos(theta*(pi/180)))
@@ -339,7 +341,7 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
         colnames(output)[phase.index[ii]] <- paste("Phase_", "Window.", ii, sep = "")
       }
       for (ii in 1:length(consol.index)) {
-        colnames(output)[consol.index[ii]] <- paste("Consolidation_", "Window.", ii, sep = "")
+        colnames(output)[consol.index[ii]] <- paste("Consolidation/SleepGate_", "Window.", ii, sep = "")
       }
       
       chan.num.col <- data.frame(
@@ -478,16 +480,17 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
         pre.df <- pre.pre.df$Profiles[,c(1:33)]
         
         if (win.start > win.end) {
-          df1 <- subset(pre.df, pre.df$ZT > win.start)
-          df2 <- subset(pre.df, pre.df$ZT <= win.end)
+          df1 <- subset(pre.df, pre.df$ZT/CT/Time > win.start)
+          df2 <- subset(pre.df, pre.df$ZT/CT/Time <= win.end)
           df <- rbind(df1, df2)
         } else {
-          df <- subset(pre.df, pre.df$ZT > win.start & pre.df$ZT <= win.end)
+          df <- subset(pre.df, pre.df$ZT/CT/Time > win.start & pre.df$ZT/CT/Time <= win.end)
         }
         
         win.size <- length(df[,1] * (bin/60))
         
-        theta <- as.matrix(seq(0, length(df[,1]), by = (bin/60))*360/win.size)
+        # theta <- as.matrix(seq(0, length(df[,1]), by = (bin/60))*360/win.size)
+        theta <- as.matrix(df[,1] * (360/(win.size * (bin/60))))
         
         sin_theta <- as.matrix(sin(theta*(pi/180)))
         cos_theta <- as.matrix(cos(theta*(pi/180)))
@@ -553,7 +556,7 @@ CoM <- function (input, data = "Activity", bin = 30, t.cycle = 24, window = list
         colnames(output)[phase.index[ii]] <- paste("Phase_", "Window.", ii, sep = "")
       }
       for (ii in 1:length(consol.index)) {
-        colnames(output)[consol.index[ii]] <- paste("Consolidation_", "Window.", ii, sep = "")
+        colnames(output)[consol.index[ii]] <- paste("Consolidation/SleepGate_", "Window.", ii, sep = "")
       }
       
       chan.num.col <- data.frame(
